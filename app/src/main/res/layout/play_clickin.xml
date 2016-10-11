@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGray"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="380dp">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/play_vp"
+            android:layout_width="match_parent"
+            android:layout_height="380dp">
+
+        </android.support.v4.view.ViewPager>
+
+        <ImageButton
+            android:id="@+id/btn_play_back"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_play_return"/>
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/play_btns_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <CheckBox
+                style="@style/play_top_btns_style"
+                android:button="@drawable/play_heart_change" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                style="@style/play_top_btns_style"
+                android:background="@mipmap/ic_download_normal" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                style="@style/play_top_btns_style"
+                android:background="@mipmap/ic_share_normal" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                style="@style/play_top_btns_style"
+                android:background="@mipmap/ic_fav_normal" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                style="@style/play_top_btns_style"
+                android:background="@mipmap/ic_fav_normal" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+        <SeekBar
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/play_vp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            style="@style/play_buttom_btns_style">
+
+            <ImageButton
+                android:id="@+id/btn_play_clickin_condition"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/bt_playpage_order_normal" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/play_buttom_btns_style">
+
+            <ImageButton
+                android:id="@+id/btn_play_clickin_last"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/bt_notificationbar_prev" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/play_buttom_btns_style">
+
+            <CheckBox
+                android:id="@+id/btn_play_clickin_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:button="@drawable/play_pause_change" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/play_buttom_btns_style">
+
+            <ImageButton
+                android:id="@+id/btn_play_clickin_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/bt_notificationbar_next" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/play_buttom_btns_style">
+
+            <ImageButton
+                android:id="@+id/btn_play_clickin_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/bt_playpage_button_list_normal" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

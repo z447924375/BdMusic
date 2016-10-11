@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/song_btn_more_clickin_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="xxxxx" />
+
+    <include layout="@layout/line" />
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout style="@style/Dialog_item">
+
+            <ImageButton
+                android:id="@+id/list_more_playnext"
+                style="@style/Dialog_item_pic"
+                android:background="@mipmap/ic_listmore_nextplay_normal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/list_more_playnext"
+                android:layout_centerHorizontal="true"
+                android:text="下一首播放" />
+        </RelativeLayout>
+
+        <RelativeLayout style="@style/Dialog_item">
+
+            <ImageButton
+                android:id="@+id/list_more_love"
+                style="@style/Dialog_item_pic"
+                android:background="@mipmap/ic_listmore_love_normal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/list_more_love"
+                android:layout_centerHorizontal="true"
+                android:text="喜欢" />
+        </RelativeLayout>
+
+        <RelativeLayout style="@style/Dialog_item">
+
+            <ImageButton
+                android:id="@+id/list_more_download"
+                style="@style/Dialog_item_pic"
+                android:background="@mipmap/ic_listmore_download_normal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/list_more_download"
+                android:layout_centerHorizontal="true"
+                android:text="下载" />
+        </RelativeLayout>
+
+        <RelativeLayout style="@style/Dialog_item">
+
+            <ImageButton
+                android:id="@+id/list_more_share"
+                style="@style/Dialog_item_pic"
+                android:background="@mipmap/ic_listmore_share_normal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/list_more_share"
+                android:layout_centerHorizontal="true"
+                android:text="分享" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginLeft="5dp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:id="@+id/list_more_add"
+            style="@style/Dialog_item_pic"
+            android:background="@mipmap/ic_listmore_add_normal" />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_more_add"
+            android:layout_centerHorizontal="true"
+            android:text="添加到" />
+    </RelativeLayout>
+    <include layout="@layout/line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="  "/>
+    </LinearLayout>
+
+
+</LinearLayout>

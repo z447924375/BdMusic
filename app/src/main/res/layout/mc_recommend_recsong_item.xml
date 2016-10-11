@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/recsong_pictrul"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_margin="10dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/recsong_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/recsong_pictrul"
+            android:text="xxxx" />
+
+        <Button
+            android:id="@+id/recsong_btn_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="#00000000"
+            android:drawableRight="@mipmap/btn_more_left_arrow_nor"
+            android:text="更多"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/recsong_pic1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/recsong_pic1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/recsong_text_item1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxxx" />
+
+            <TextView
+                android:id="@+id/recsong_singer1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxxx"
+                android:textColor="#292a2b"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/recsong_item_btn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/mc_recommend_recsong_btn" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/recsong_pic2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/recsong_pic2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/recsong_text_item2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxxx" />
+
+            <TextView
+                android:id="@+id/recsong_singer2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxxx"
+                android:textColor="#292a2b"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageButton
+
+            android:id="@+id/recsong_item_btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/mc_recommend_recsong_btn" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/recsong_pic3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/recsong_pic3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/recsong_text_item3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxxx" />
+
+            <TextView
+                android:id="@+id/recsong_singer3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxxx"
+                android:textColor="#292a2b"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/recsong_item_btn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/mc_recommend_recsong_btn" />
+    </RelativeLayout>
+
+
+</LinearLayout>

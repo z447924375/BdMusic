@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/scene_radio_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_margin="10dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/scene_radio_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/scene_radio_icon"
+            android:text="xxxx" />
+
+        <Button
+            android:id="@+id/scene_radio_btn_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="#00000000"
+            android:drawableRight="@mipmap/btn_more_left_arrow_nor"
+            android:text="更多"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/scene_radio_btn_item1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/img_recommend_lebo_orange" />
+
+            <TextView
+                android:textSize="12sp"
+                android:textColor="#e4e2bc5b"
+                android:id="@+id/scene_radio_btn_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:text="xxxx" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/scene_radio_btn_item2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/img_recommend_lebo_green" />
+
+            <TextView
+                android:textSize="12sp"
+                android:textColor="#d5c3df6f"
+                android:id="@+id/scene_radio_btn_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:text="xxxx" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/scene_radio_btn_item3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/img_recommend_lebo_cyan" />
+
+            <TextView
+                android:textSize="12sp"
+                android:textColor="#d941d2dc"
+                android:id="@+id/scene_radio_btn_text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:text="xxxx" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/scene_radio_btn_item4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/img_recommend_lebo_blue" />
+
+            <TextView
+                android:textSize="12sp"
+                android:textColor="#d0649bd9"
+                android:id="@+id/scene_radio_btn_text4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:text="xxxx" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

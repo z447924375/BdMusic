@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/hot_album_pictrul"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_margin="10dp" />
+
+        <TextView
+            android:id="@+id/hot_album_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/hot_album_pictrul"
+            android:text="热销专辑" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/hot_album_pic1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:src="@mipmap/default_live_ic" />
+
+            <TextView
+                android:id="@+id/hot_album_text1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="whatever"
+                android:textSize="10dp" />
+            <TextView
+                android:id="@+id/hot_album_singer1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textSize="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/hot_album_pic2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:src="@mipmap/default_live_ic" />
+
+            <TextView
+                android:id="@+id/hot_album_text2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="whatever"
+                android:textSize="10dp" />
+            <TextView
+                android:id="@+id/hot_album_singer2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textSize="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/hot_album_pic3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:src="@mipmap/default_live_ic" />
+
+            <TextView
+                android:id="@+id/hot_album_text3"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="whatever"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/hot_album_singer3"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textSize="10dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

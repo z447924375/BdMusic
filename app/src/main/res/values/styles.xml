@@ -1,0 +1,39 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Dialog_btn_more_clicked" parent="@android:style/Theme.Holo.DialogWhenLarge">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@color/colorWhite</item>
+    </style>
+
+    <style name="Dialog_item">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="Dialog_item_pic">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+    <style name="play_buttom_btns_style">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">0dp</item>
+       <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="play_top_btns_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+
+    </style>
+
+
+</resources>

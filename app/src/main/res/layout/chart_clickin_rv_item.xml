@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/chart_clickin_rv_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+    <ImageView
+        android:id="@+id/chart_clickin_rv_item_pic"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/chart_clickin_rv_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/chart_clickin_rv_item_pic"
+        android:text="xxxxxx"
+        android:textSize="13dp" />
+
+
+    <ImageView
+        android:id="@+id/chart_clickin_rv_item_mv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/chart_clickin_rv_item_title" />
+
+    <ImageView
+        android:id="@+id/chart_clickin_rv_item_sq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/view"
+        android:layout_alignStart="@+id/chart_clickin_rv_item_title"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:id="@+id/chart_clickin_rv_item_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/view"
+        android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@+id/chart_clickin_rv_item_sq"
+        android:text="xxxxxx"
+        android:textSize="12dp" />
+
+
+    <ImageButton
+        android:id="@+id/chart_clickin_rv_item_btnmore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/bt_recsong_more" />
+
+    <ImageButton
+        android:id="@+id/chart_clickin_rv_item_btnmike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="45dp"
+        android:layout_toStartOf="@+id/chart_clickin_rv_item_btnmore"
+        android:background="#00000000" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.1"
+        android:background="#000000" />
+
+
+</RelativeLayout>
