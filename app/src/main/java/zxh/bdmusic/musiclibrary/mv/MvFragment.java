@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
 import zxh.bdmusic.baseclass.VolleySingleton;
-import zxh.bdmusic.musiclibrary.musicllib_baseinfo.URLVlaues;
+import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
 
 /**
  * Created by dllo on 16/9/20.

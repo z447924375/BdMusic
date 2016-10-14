@@ -1,12 +1,15 @@
 package zxh.bdmusic.eventbus;
 
-import zxh.bdmusic.musicplay.SongMsgBean;
+import java.util.ArrayList;
+
+import zxh.bdmusic.playservice.SongMsgBean;
 
 /**
  * Created by dllo on 16/10/11.
  */
 public class SendSongMsgBeanEvent {
     private SongMsgBean songMsgBean;
+    private ArrayList<String>songIDs;
 
     public SongMsgBean getSongMsgBean() {
         return songMsgBean;

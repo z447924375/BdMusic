@@ -6,7 +6,7 @@
     <color name="colorTitle">#7ab4fc</color>
     <color name="colorTabSelectText">#86b6f2</color>
     <color name="colorWhite">#ffffff</color>
-    <color name="colorGray">#a6a6a6</color>
+    <color name="colorGray">#cecece</color>
     <color name="colorBlack">#000000</color>
 
 </resources>

@@ -12,8 +12,8 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import zxh.bdmusic.R;
-import zxh.bdmusic.musiclibrary.recommend.rec_baseinfo.OnListenerCallBack;
-import zxh.bdmusic.musiclibrary.recommend.songlist_clickin.SongClickInMsgCallback;
+import zxh.bdmusic.musiclibrary.recommend.recbaseinfo.OnListenerCallBack;
+import zxh.bdmusic.musiclibrary.recommend.songlistclickin.SongClickInMsgCallback;
 
 /**
  * Created by dllo on 16/9/22.

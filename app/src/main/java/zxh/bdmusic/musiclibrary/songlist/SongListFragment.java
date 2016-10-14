@@ -1,6 +1,7 @@
 package zxh.bdmusic.musiclibrary.songlist;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,12 +20,12 @@ import java.util.ArrayList;
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
 import zxh.bdmusic.baseclass.VolleySingleton;
-import zxh.bdmusic.musiclibrary.musicllib_baseinfo.URLVlaues;
-import zxh.bdmusic.musiclibrary.recommend.rec_baseinfo.OnListenerCallBack;
-import zxh.bdmusic.musiclibrary.recommend.songlist_clickin.SongClickInMsgCallback;
-import zxh.bdmusic.musiclibrary.recommend.songlist_clickin.SongListClickInBean;
-import zxh.bdmusic.musiclibrary.recommend.songlist_clickin.SongListClickInFragment;
-import zxh.bdmusic.musicplay.MusicPlayService;
+import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
+import zxh.bdmusic.musiclibrary.recommend.recbaseinfo.OnListenerCallBack;
+import zxh.bdmusic.musiclibrary.recommend.songlistclickin.SongClickInMsgCallback;
+import zxh.bdmusic.musiclibrary.recommend.songlistclickin.SongListClickInBean;
+import zxh.bdmusic.musiclibrary.recommend.songlistclickin.SongListClickInFragment;
+import zxh.bdmusic.playservice.MusicPlayService;
 
 /**
  * Created by dllo on 16/9/20.
@@ -36,7 +37,7 @@ public class SongListFragment extends BaseFragment {
     private Button btn_hotest;
     private Button btn_newest;
     private FragmentManager fm;
-
+    private SQLiteDatabase sqLiteDatabase;
 
 
     @Override
@@ -130,6 +131,7 @@ public class SongListFragment extends BaseFragment {
                     songIDs.add(clickInBean.getContent().get(i).getSong_id());
                     Log.d("SongListFragment", clickInBean.getContent().get(i).getSong_id());
                 }
+
                 Intent intent = new Intent(getActivity(), MusicPlayService.class);
                 intent.putStringArrayListExtra("songIDs", songIDs);
                 intent.putExtra("position", 0);

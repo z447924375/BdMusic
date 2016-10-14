@@ -120,6 +120,7 @@
                             android:src="@mipmap/img_live_integral" />
 
                         <ImageButton
+                            android:id="@+id/songlist_clickin_btn_share"
                             android:layout_gravity="center"
                             android:layout_width="30dp"
                             android:layout_height="30dp"

@@ -1,6 +1,6 @@
 package zxh.bdmusic.eventbus;
 
-import zxh.bdmusic.musiclibrary.recommend.songlist_clickin.SongListClickInBean;
+import zxh.bdmusic.musiclibrary.recommend.songlistclickin.SongListClickInBean;
 
 /**
  * Created by dllo on 16/10/8.
