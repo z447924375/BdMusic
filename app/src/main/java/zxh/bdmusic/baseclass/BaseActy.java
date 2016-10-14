@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by dllo on 16/9/19.
  */
@@ -37,5 +39,17 @@ public abstract class BaseActy extends FragmentActivity {
 
     protected <T extends View> T bindView(int id){
         return (T)findViewById(id);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onResume(this);
     }
 }

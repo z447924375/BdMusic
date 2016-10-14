@@ -30,6 +30,13 @@ public class MusicPlayer implements MediaPlayer.OnBufferingUpdateListener, Media
             mediaPlayer.reset();
             mediaPlayer.setDataSource(videoUrl);
             mediaPlayer.prepare();//prepare之后自动播放
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+
+                }
+            });
+
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (IllegalStateException e) {
@@ -39,13 +46,12 @@ public class MusicPlayer implements MediaPlayer.OnBufferingUpdateListener, Media
         }
     }
 
+
+
     public void start() {
         mediaPlayer.start();
     }
 
-    public boolean isPlaying() {
-        return mediaPlayer.isPlaying();
-    }
 
     public void pause() {
         mediaPlayer.pause();
@@ -55,12 +61,8 @@ public class MusicPlayer implements MediaPlayer.OnBufferingUpdateListener, Media
         mediaPlayer.release();
     }
 
-    public int duration() {
-        return mediaPlayer.getDuration();
-    }
 
     public void stop() {
-
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
@@ -68,17 +70,7 @@ public class MusicPlayer implements MediaPlayer.OnBufferingUpdateListener, Media
         }
     }
 
-    public boolean isComplited() {
-        final boolean[] isComplicated = new boolean[1];
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
 
-                isComplicated[0] = true;
-            }
-        });
-        return isComplicated[0];
-    }
 
     @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {

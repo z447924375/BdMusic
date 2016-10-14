@@ -13,15 +13,10 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.eventbus.SendSongPlayPositionEvent;
 import zxh.bdmusic.playservice.MusicPlayService;
 import zxh.bdmusic.playservice.SongMsgBean;
 
@@ -43,9 +38,8 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
     private SeekBar play_seekbar;
     private TextView playing_time;
     private TextView total_time;
-    private int duration;
-    private int progress;
     private int position;
+
     @Override
     protected int setLayout() {
         return R.layout.play_clickin;
@@ -53,7 +47,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initView() {
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
         btn_play_clickin_pause = getViewLayout(R.id.btn_play_clickin_pause);
         btn_play_clickin_last = getViewLayout(R.id.btn_play_clickin_last);
         btn_play_clickin_next = getViewLayout(R.id.btn_play_clickin_next);
@@ -86,34 +80,57 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
         adapter = new PlayVpAdapter(getChildFragmentManager(), fragments);
         play_vp.setAdapter(adapter);
         play_vp.setCurrentItem(1);
-
-
-
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void ReceiveEvent(SendSongPlayPositionEvent songPlayPositionEvent) {
-        position = songPlayPositionEvent.getPosition();
-        duration=songPlayPositionEvent.getDuration();
-        playing_time.setText(changeTime(position));
-        progress = position * 100 / duration;
-        play_seekbar.setProgress(progress);
-        play_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mybinder.seekTo((int) (progress / 100f * duration));
-            }
+    private class MyConnection implements ServiceConnection {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mybinder = (MusicPlayService.Mybinder) service;
+            play_seekbar.setMax(mybinder.getTotalDuration());
+            total_time.setText(changeTime(mybinder.getMediaPlayer().getDuration()));
+            play_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    if (fromUser){
+                        mybinder.getMediaPlayer().seekTo(progress);
+                    }
+                }
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                }
+            });
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        // 需要判断一下
+                        if (mybinder.isPlaying()) {
+                            play_seekbar.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    play_seekbar.setProgress(mybinder.getCurrentPosition());
+                                    playing_time.setText(changeTime(mybinder.getMediaPlayer().getCurrentPosition()));
+                                }
+                            });
+                            try {
+                                Thread.sleep(400);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }).start();
+        }
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
     }
-
 
     @Override
     public void onClick(View v) {
@@ -123,40 +140,24 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
                 manager.beginTransaction().setCustomAnimations(R.anim.part_no, R.anim.part_downdispear).remove(this).commit();
                 break;
             case R.id.btn_play_clickin_pause:
-                if (mybinder.isPlaying()){
+                if (mybinder.isPlaying()) {
                     mybinder.playPause();
                     btn_play_clickin_pause.setImageResource(R.mipmap.bt_notificationbar_play);
-                }else {
+                } else {
                     btn_play_clickin_pause.setImageResource(R.mipmap.bt_notificationbar_pause);
                     mybinder.playStart();
                 }
 
                 break;
             case R.id.btn_play_clickin_last:
+                mybinder.playLast();
 
                 break;
             case R.id.btn_play_clickin_next:
-
                 mybinder.playNext();
-
                 break;
         }
     }
-
-    private class MyConnection implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            mybinder = (MusicPlayService.Mybinder) service;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    }
-
-
 
 
     public String changeTime(int duration) {
@@ -170,6 +171,5 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }

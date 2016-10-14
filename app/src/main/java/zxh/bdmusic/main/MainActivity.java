@@ -118,7 +118,7 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
                 Intent intent = new Intent(this, MusicPlayService.class);
                 intent.putStringArrayListExtra("songIDs", songIDs);
                 intent.putExtra("position", position);
-                intent.putExtra("isFirstEntry",true);
+//                intent.putExtra("isfirst",true);
                 startService(intent);
 
             } else {
@@ -156,7 +156,7 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
         play_song_singer.setText(bean.getSonginfo().getAuthor());
         play_song_name.setText(bean.getSonginfo().getTitle());
         ImageLoader.getInstance().displayImage(bean.getSonginfo().getPic_big(), play_song_pic, options);
-        showNotify();
+//        showNotify();
     }
 
     @Override

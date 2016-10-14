@@ -27,6 +27,14 @@ import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
  * Created by dllo on 16/10/7.
  */
 public class MusicPlayService extends Service {
+    public MusicPlayer getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(MusicPlayer player) {
+        this.player = player;
+    }
+
     private MusicPlayer player = new MusicPlayer();
     private SongMsgBean bean = new SongMsgBean();
     private Mybinder binder = new Mybinder();
@@ -34,14 +42,14 @@ public class MusicPlayService extends Service {
     private int position;
     private SQLiteDatabase sqLiteDatabase;
     private ContentValues values;
-    private boolean isFirstEntry;
-
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+
     }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -50,15 +58,10 @@ public class MusicPlayService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         songIDs = intent.getStringArrayListExtra("songIDs");
         position = (int) intent.getExtras().get("position");
-        isFirstEntry = (boolean) intent.getExtras().get("isFirstEntry");
-
-        if (isFirstEntry){
-
-        }
         playSong(songIDs, position);
+
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -66,7 +69,7 @@ public class MusicPlayService extends Service {
     public void onDestroy() {
         super.onDestroy();
         player.release();
-    }      
+    }
 
     private void playSong(final ArrayList<String> songIDs, final int position) {
         final StringRequest stringRequest = new StringRequest(URLVlaues.PLAY_FRONT + songIDs.get(position) + URLVlaues.PLAY_BEHIND, new Response.Listener<String>() {
@@ -117,7 +120,12 @@ public class MusicPlayService extends Service {
     }
 
     public class Mybinder extends Binder {
+        public Mybinder() {
+        }
 
+        public MediaPlayer getMediaPlayer() {
+            return player.mediaPlayer;
+        }
 
         public void playNext() {
             if (position < songIDs.size() - 1) {
@@ -129,9 +137,16 @@ public class MusicPlayService extends Service {
             }
         }
 
-        public boolean isPlaying() {
-            return player.isPlaying();
+        public void playLast() {
+            if (position > 0) {
+                playSong(songIDs, position - 1);
+                position -= 1;
+            } else {
+                playSong(songIDs, songIDs.size() - 1);
+                position = songIDs.size() - 1;
+            }
         }
+
 
         public void playPause() {
             player.pause();
@@ -152,6 +167,27 @@ public class MusicPlayService extends Service {
 
         public void seekTo(int msec) {
             player.mediaPlayer.seekTo(msec);
+        }
+
+        public boolean isPlaying() {
+            if (player.mediaPlayer != null) {
+                return player.mediaPlayer.isPlaying();
+            }
+            return false;
+        }
+
+        public int getTotalDuration() {
+            if (player.mediaPlayer != null) {
+                return player.mediaPlayer.getDuration();
+            }
+            return -1;
+        }
+
+        public int getCurrentPosition() {
+            if (player.mediaPlayer != null) {
+                return player.mediaPlayer.getCurrentPosition();
+            }
+            return -1;
         }
 
 
