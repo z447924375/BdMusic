@@ -56,12 +56,12 @@ public class MusicPlayService extends Service {
         isFirstEntry = (boolean) intent.getExtras().get("isFirstEntry");
 
         if (isFirstEntry){
-            
+
         }
         playSong(songIDs, position);
         return super.onStartCommand(intent, flags, startId);
     }
-
+     
     @Override
     public void onDestroy() {
         super.onDestroy();
