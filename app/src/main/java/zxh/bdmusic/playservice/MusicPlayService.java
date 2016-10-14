@@ -66,7 +66,7 @@ public class MusicPlayService extends Service {
     public void onDestroy() {
         super.onDestroy();
         player.release();
-    }
+    }      
 
     private void playSong(final ArrayList<String> songIDs, final int position) {
         final StringRequest stringRequest = new StringRequest(URLVlaues.PLAY_FRONT + songIDs.get(position) + URLVlaues.PLAY_BEHIND, new Response.Listener<String>() {
