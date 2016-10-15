@@ -101,13 +101,14 @@
             android:id="@+id/play_seekbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="8" />
+            android:layout_marginRight="5dp"
+            android:layout_weight="9" />
 
         <TextView
             android:id="@+id/total_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="2"
             android:text="00:00" />
 
@@ -127,9 +128,9 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerInParent="true"
-                android:background="@mipmap/bt_playpage_order_normal" />
+                android:background="@color/colorAlphaZero"
+                android:src="@mipmap/bt_list_button_roundplay_normal" />
         </RelativeLayout>
-
         <RelativeLayout style="@style/play_buttom_btns_style">
 
             <ImageButton
@@ -148,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@color/colorWhite"
-                android:src="@mipmap/bt_notificationbar_pause"/>
+                android:src="@mipmap/bt_notificationbar_pause" />
         </RelativeLayout>
 
         <RelativeLayout style="@style/play_buttom_btns_style">
@@ -168,7 +169,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:background="@mipmap/bt_playpage_button_list_normal" />
+                android:background="@mipmap/bt_playpage_button_list_press" />
         </RelativeLayout>
     </LinearLayout>
 

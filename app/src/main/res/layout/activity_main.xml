@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
-                    android:background="@color/colorWhite"
+                    android:background="@color/colorAlphaZero"
                     android:src="@mipmap/bt_minibar_pause_normal" />
 
                 <ImageButton

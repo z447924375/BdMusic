@@ -50,6 +50,6 @@ public abstract class BaseActy extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JPushInterface.onResume(this);
+        JPushInterface.onPause(this);
     }
 }

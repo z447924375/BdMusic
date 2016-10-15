@@ -12,6 +12,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,13 +60,13 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     protected void initView() {
-        ShareSDK.initSDK(getContext(),"sharesdk的appkey");
+        ShareSDK.initSDK(getContext(), "sharesdk的appkey");
         EventBus.getDefault().register(this);
         chart_clickin_rv = getViewLayout(R.id.chart_clickin_rv);
         chart_clickin_appbar_ll = getViewLayout(R.id.chart_clickin_appbar_ll);
         chart_clickin_btn_back = getViewLayout(R.id.chart_clickin_btn_back);
         chart_clickin_text_time = getViewLayout(R.id.chart_clickin_text_time);
-        chart_clickin_btn_share =getViewLayout(R.id.chart_clickin_btn_share);
+        chart_clickin_btn_share = getViewLayout(R.id.chart_clickin_btn_share);
     }
 
     @Override
@@ -83,10 +84,17 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ReceiveEvent(SendChartClickInBeanEvent event) {
         final ArrayList<String> songIDs = new ArrayList<>();
-
+        final ArrayList<String> songNames = new ArrayList<>();
+        final ArrayList<String> authors = new ArrayList<>();
         bean = event.getChartClickInBean();
         for (int i = 0; i < bean.getSong_list().size(); i++) {
             songIDs.add(bean.getSong_list().get(i).getSong_id());
+
+            songNames.add(bean.getSong_list().get(i).getTitle());
+            authors.add(bean.getSong_list().get(i).getAuthor());
+            Log.d("ChartClickInFragment", bean.getSong_list().get(i).getTitle()
+                    + bean.getSong_list().get(i).getAuthor());
+
         }
         chart_clickin_rv.setAdapter(adapter);
         adapter.setBean(bean);
@@ -96,9 +104,10 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
             @Override
             public void click(int position) {
 
-
                 Intent intent = new Intent(getActivity(), MusicPlayService.class);
                 intent.putStringArrayListExtra("songIDs", songIDs);
+                intent.putStringArrayListExtra("songNames", songNames);
+                intent.putStringArrayListExtra("authors", authors);
                 intent.putExtra("position", position);
                 getActivity().startService(intent);
 
@@ -110,7 +119,7 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
             @Override
             public void btnClick(int position) {
 
-                View view= LayoutInflater.from(getContext()).inflate(R.layout.song_btn_more_click_dialog,null);
+                View view = LayoutInflater.from(getContext()).inflate(R.layout.song_btn_more_click_dialog, null);
                 AlertDialog dialog = new AlertDialog.Builder(getContext(), R.style.Dialog_btn_more_clicked).create();
                 Window window = dialog.getWindow();
                 window.setGravity(Gravity.BOTTOM);
@@ -173,6 +182,7 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
             }
             return bitmap;
         }
+
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
@@ -180,7 +190,6 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
             chart_clickin_appbar_ll.setBackground(bd);
         }
     }
-
 
 
     //分享  方法

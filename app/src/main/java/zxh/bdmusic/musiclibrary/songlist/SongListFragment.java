@@ -125,6 +125,8 @@ public class SongListFragment extends BaseFragment {
             @Override
             public void onResponse(String response) {
                 ArrayList<String>songIDs = new ArrayList<>();
+                ArrayList<String>songNames=new ArrayList<>();
+                ArrayList<String>authors=new ArrayList<>();
                 Gson gson = new Gson();
                 clickInBean = gson.fromJson(response, SongListClickInBean.class);
                 for (int i = 0; i < clickInBean.getContent().size(); i++) {
@@ -134,6 +136,8 @@ public class SongListFragment extends BaseFragment {
 
                 Intent intent = new Intent(getActivity(), MusicPlayService.class);
                 intent.putStringArrayListExtra("songIDs", songIDs);
+                intent.putStringArrayListExtra("songNames", songNames);
+                intent.putStringArrayListExtra("authors", authors);
                 intent.putExtra("position", 0);
                 getActivity().startService(intent);
             }

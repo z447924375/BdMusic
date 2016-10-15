@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -15,10 +16,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
@@ -34,11 +37,15 @@ import java.util.ArrayList;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseActy;
+import zxh.bdmusic.eventbus.SendListArrFromServicEvent;
+import zxh.bdmusic.eventbus.SendPlayConditionEvent;
+import zxh.bdmusic.eventbus.SendPlayLastOrNextEvent;
 import zxh.bdmusic.eventbus.SendSongMsgBeanEvent;
 import zxh.bdmusic.live.LiveFragment;
 import zxh.bdmusic.mine.MineFragment;
 import zxh.bdmusic.musiclibrary.musicllibbaseinfo.MusicLibFragment;
 import zxh.bdmusic.play.PlayFragment;
+import zxh.bdmusic.play.PlayListFragment;
 import zxh.bdmusic.playservice.MusicPlayService;
 import zxh.bdmusic.playservice.MyHelper;
 import zxh.bdmusic.playservice.SongMsgBean;
@@ -64,6 +71,15 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
     private SQLiteDatabase database;
     private String song;
     private int position;
+    private int condition;
+    private int con;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor sped;
+
+    private PopupWindow mPopWindow;
+
+
+    private int con2;
 
 
     @Override
@@ -118,7 +134,6 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
                 Intent intent = new Intent(this, MusicPlayService.class);
                 intent.putStringArrayListExtra("songIDs", songIDs);
                 intent.putExtra("position", position);
-//                intent.putExtra("isfirst",true);
                 startService(intent);
 
             } else {
@@ -156,11 +171,29 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
         play_song_singer.setText(bean.getSonginfo().getAuthor());
         play_song_name.setText(bean.getSonginfo().getTitle());
         ImageLoader.getInstance().displayImage(bean.getSonginfo().getPic_big(), play_song_pic, options);
-//        showNotify();
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getPlayConditionEvent(SendPlayConditionEvent playConditionEvent) {
+        condition = playConditionEvent.getPlayCondition();
+        sp = getSharedPreferences("con", MODE_PRIVATE);
+        sped = sp.edit();
+        sped.putInt("condition", condition);
+        sped.commit();
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getevnet(SendListArrFromServicEvent fromServicEvent) {
+        Log.d("dddd", "haha");
+        ArrayList<String> songIDs=fromServicEvent.getSongIDs();
+        ArrayList<String> authors=fromServicEvent.getAuthors();
+    }
+
+
 
     @Override
     public void onClick(View v) {
+        SharedPreferences sharedPreferences = getSharedPreferences("con", MODE_PRIVATE);
+        con = sharedPreferences.getInt("condition", 0);
         switch (v.getId()) {
             case R.id.btn_play_song_pause:
 
@@ -173,9 +206,29 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
                 }
                 break;
             case R.id.btn_play_song_next:
-                mybinder.playNext();
+//                switch (con % 3) {
+//                    case 0://循环
+//                        mybinder.playNext(0);
+//                        break;
+//                    case 1://随机
+//                        mybinder.playNext(1);
+//                        break;
+//                    case 2://单曲
+//                        mybinder.playNext(2);
+//                        break;
+//
+//                }
+                mybinder.playNext(con % 3);
+
                 break;
             case R.id.btn_play_song_list:
+                FragmentManager fm=getSupportFragmentManager();
+
+                PlayListFragment listFragment=new PlayListFragment();
+                fm.beginTransaction().setCustomAnimations(R.anim.part_upshow, R.anim.part_no)
+                    .replace(R.id.main_all, listFragment).commit();
+
+//                showPopupWindow();
 
                 break;
             case R.id.main_play_ll:
@@ -183,11 +236,32 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
                 bundle.putSerializable("SongMsgBean", bean);
                 PlayFragment playFragment = new PlayFragment();
                 playFragment.setArguments(bundle);
-                manager.beginTransaction().setCustomAnimations(R.anim.part_upshow, R.anim.part_no).replace(R.id.main_all, playFragment).commit();
+                manager.beginTransaction().setCustomAnimations(R.anim.part_upshow, R.anim.part_no)
+                        .replace(R.id.main_all, playFragment).commit();
                 break;
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getPlayLastOrNextEvent(SendPlayLastOrNextEvent playLastOrNextEvent) {
+        int k = playLastOrNextEvent.getChoice();
+        switch (k) {
+            case 1:
+                mybinder.playLast();
+                break;
+            case 2:
+                SharedPreferences sharedPreferences2 = getSharedPreferences("con", MODE_PRIVATE);
+                con2 = sharedPreferences2.getInt("condition", 0);
+                mybinder.playNext(con2 % 3);
+                break;
+            case 11:
+                mybinder.playPause();
+                break;
+            case 22:
+                mybinder.playStart();
+                break;
+        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -221,5 +295,18 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
         @Override
         public void onServiceDisconnected(ComponentName name) {
         }
+    }
+
+
+
+    @Override
+
+    public boolean onTouchEvent(MotionEvent event) {
+
+        if (mPopWindow != null && mPopWindow.isShowing()) {
+            mPopWindow.dismiss();
+            mPopWindow = null;
+        }
+        return super.onTouchEvent(event);
     }
 }

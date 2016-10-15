@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -17,9 +18,11 @@ import com.google.gson.Gson;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import zxh.bdmusic.baseclass.MyApp;
 import zxh.bdmusic.baseclass.VolleySingleton;
+import zxh.bdmusic.eventbus.SendListArrFromServicEvent;
 import zxh.bdmusic.eventbus.SendSongMsgBeanEvent;
 import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
 
@@ -27,6 +30,9 @@ import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
  * Created by dllo on 16/10/7.
  */
 public class MusicPlayService extends Service {
+
+
+
     public MusicPlayer getPlayer() {
         return player;
     }
@@ -39,6 +45,8 @@ public class MusicPlayService extends Service {
     private SongMsgBean bean = new SongMsgBean();
     private Mybinder binder = new Mybinder();
     private ArrayList<String> songIDs;
+    private ArrayList<String> songNames;
+    private ArrayList<String> authors;
     private int position;
     private SQLiteDatabase sqLiteDatabase;
     private ContentValues values;
@@ -46,7 +54,6 @@ public class MusicPlayService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
 
     }
 
@@ -60,6 +67,11 @@ public class MusicPlayService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         songIDs = intent.getStringArrayListExtra("songIDs");
         position = (int) intent.getExtras().get("position");
+        songNames = intent.getStringArrayListExtra("songNames");
+        authors = intent.getStringArrayListExtra("authors");
+
+
+
         playSong(songIDs, position);
 
         return super.onStartCommand(intent, flags, startId);
@@ -83,10 +95,16 @@ public class MusicPlayService extends Service {
                 values = new ContentValues();
                 values.put("song", String.valueOf(songIDs));
                 values.put("position", position);
-
                 sqLiteDatabase.delete("music", null, null);
                 sqLiteDatabase.insert("music", "song", values);
 
+                if (songNames != null && authors != null) {
+                    SendListArrFromServicEvent fromServicEvent = new SendListArrFromServicEvent();
+                    fromServicEvent.setSongIDs(songNames);
+                    fromServicEvent.setAuthors(authors);
+                    EventBus.getDefault().post(fromServicEvent);
+
+                }
                 SendSongMsgBeanEvent event = new SendSongMsgBeanEvent();
                 event.setSongMsgBean(bean);
                 EventBus.getDefault().post(event);
@@ -98,6 +116,7 @@ public class MusicPlayService extends Service {
                         Next();
                     }
                 });
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -127,14 +146,34 @@ public class MusicPlayService extends Service {
             return player.mediaPlayer;
         }
 
-        public void playNext() {
-            if (position < songIDs.size() - 1) {
-                playSong(songIDs, position + 1);
-                position += 1;
-            } else {
-                playSong(songIDs, 0);
-                position = 0;
+        public void playNext(int playCondition) {
+
+            switch (playCondition) {
+                case 0://循环播放
+                    Log.d("Mybinder", "循环");
+                    if (position < songIDs.size() - 1) {
+                        playSong(songIDs, position + 1);
+                        position += 1;
+                    } else {
+                        playSong(songIDs, 0);
+                        position = 0;
+                    }
+                    break;
+                case 1://随机播放
+                    Log.d("Mybinder", "随机");
+                    Random random = new Random();
+                    position = random.nextInt(songIDs.size());
+                    playSong(songIDs, position);
+                    break;
+
+                case 2://单曲循环
+                    Log.d("Mybinder", "单曲");
+                    playSong(songIDs, position);
+                    break;
+
             }
+
+
         }
 
         public void playLast() {

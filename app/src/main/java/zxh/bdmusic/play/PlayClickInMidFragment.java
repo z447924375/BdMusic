@@ -84,8 +84,6 @@ public class PlayClickInMidFragment extends BaseFragment {
         ImageLoader.getInstance().displayImage(mSongMsgBean.getSonginfo().getPic_big(), play_clickin_mid_img, options);
         ImgAscyntask ascyntask=new ImgAscyntask();
         ascyntask.execute(mSongMsgBean.getSonginfo().getPic_big());
-
-
     }
 
     class ImgAscyntask extends AsyncTask<String, Integer, Bitmap> {

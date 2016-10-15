@@ -54,7 +54,8 @@ import zxh.bdmusic.playservice.MusicPlayService;
  * Created by dllo on 16/9/29.
  */
 public class SongListClickInFragment extends BaseFragment implements View.OnClickListener {
-
+    ArrayList<String>songNames=new ArrayList<>();
+    ArrayList<String>authors=new ArrayList<>();
     ArrayList<String> songIDs = new ArrayList<>();
     SongListClickInBean bean = new SongListClickInBean();
     private RecyclerView songlist_clickin_rv;
@@ -160,6 +161,8 @@ public class SongListClickInFragment extends BaseFragment implements View.OnClic
 
         for (int i = 0; i < bean.getContent().size(); i++) {
             songIDs.add(bean.getContent().get(i).getSong_id());
+            songNames.add(bean.getContent().get(i).getTitle());
+            authors.add(bean.getContent().get(i).getAuthor());
         }
 
         SongListClickInAdapter adapter = new SongListClickInAdapter(mContext);
@@ -175,11 +178,14 @@ public class SongListClickInFragment extends BaseFragment implements View.OnClic
         songlist_clickin_title.setText(bean.getTitle());
 
         adapter.setOnListenerCallBack(new OnListenerCallBack() {
+
             @Override
             public void CallBack(int position) {
 
                 Intent intent=new Intent(getActivity(),MusicPlayService.class);
                 intent.putStringArrayListExtra("songIDs", songIDs);
+                intent.putStringArrayListExtra("songNames", songNames);
+                intent.putStringArrayListExtra("authors", authors);
                 intent.putExtra("position", position);
                 getActivity().startService(intent);
             }
