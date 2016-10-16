@@ -48,6 +48,7 @@
             android:layout_weight="1">
 
             <ImageButton
+                android:id="@+id/btn_play_clickin_download"
                 style="@style/play_top_btns_style"
                 android:background="@mipmap/ic_download_normal" />
         </RelativeLayout>
@@ -58,6 +59,7 @@
             android:layout_weight="1">
 
             <ImageButton
+                android:id="@+id/btn_play_clickin_share"
                 style="@style/play_top_btns_style"
                 android:background="@mipmap/ic_share_normal" />
         </RelativeLayout>

@@ -15,7 +15,7 @@ import zxh.bdmusic.R;
  * Created by dllo on 16/10/15.
  */
 public class PlayLvAdapter extends BaseAdapter {
-    ArrayList<String> songIDs = new ArrayList<>();
+    ArrayList<String> songNames = new ArrayList<>();
     ArrayList<String> authors=new ArrayList<>();
     Context context;
 
@@ -23,8 +23,8 @@ public class PlayLvAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setSongIDs(ArrayList<String> songIDs) {
-        this.songIDs = songIDs;
+    public void setSongNames(ArrayList<String> songNames) {
+        this.songNames = songNames;
     }
 
     public void setAuthors(ArrayList<String> authors) {
@@ -33,7 +33,7 @@ public class PlayLvAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return songIDs == null ? 0 : songIDs.size();
+        return songNames == null ? 0 : songNames.size();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class PlayLvAdapter extends BaseAdapter {
         } else {
             viewHolder = (ListViewHolder) convertView.getTag();
         }
-        viewHolder.title.setText(songIDs.get(position));
+        viewHolder.title.setText(songNames.get(position));
         viewHolder.author.setText(authors.get(position));
         return convertView;
     }

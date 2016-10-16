@@ -1,14 +1,16 @@
 package zxh.bdmusic.play;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import org.greenrobot.eventbus.EventBus;
+import java.util.ArrayList;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
+import zxh.bdmusic.main.PlayLvAdapter;
 
 /**
  * Created by dllo on 16/10/15.
@@ -17,6 +19,8 @@ public class PlayListFragment extends BaseFragment implements View.OnClickListen
     private ListView play_list;
     private LinearLayout remove_this;
     private FragmentManager fm;
+    private ArrayList<String> songNames;
+    private ArrayList<String> authors;
 
     @Override
     protected int setLayout() {
@@ -25,7 +29,6 @@ public class PlayListFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initView() {
-        EventBus.getDefault().register(this);
         play_list = getViewLayout(R.id.play_list);
         remove_this = getViewLayout(R.id.remove_this);
     }
@@ -33,18 +36,25 @@ public class PlayListFragment extends BaseFragment implements View.OnClickListen
     @Override
     protected void initDate() {
         remove_this.setOnClickListener(this);
+        PlayLvAdapter adapter = new PlayLvAdapter(getContext());
+        Bundle bundle = getArguments();
+        if (bundle!=null){
+            songNames = bundle.getStringArrayList("songNames");
+            authors = bundle.getStringArrayList("authors");
+            if (songNames != null && authors != null) {
+                adapter.setAuthors(authors);
+                adapter.setSongNames(songNames);
+                play_list.setAdapter(adapter);
+            }
+
+        }
+
     }
 
     @Override
     public void onClick(View v) {
-        fm = getChildFragmentManager();
-        fm.beginTransaction().setCustomAnimations(R.anim.part_no, R.anim.part_downdispear).remove(this).commit();
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        fm = getActivity().getSupportFragmentManager();
+        fm.beginTransaction().setCustomAnimations(R.anim.part_no, R.anim.part_downdispear)
+                .remove(this).commit();
     }
 }

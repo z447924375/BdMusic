@@ -95,15 +95,15 @@ public class MusicPlayService extends Service {
                 values = new ContentValues();
                 values.put("song", String.valueOf(songIDs));
                 values.put("position", position);
+//                values.put("titles", String.valueOf(songNames));
+//                values.put("authors", String.valueOf(authors));
                 sqLiteDatabase.delete("music", null, null);
                 sqLiteDatabase.insert("music", "song", values);
-
                 if (songNames != null && authors != null) {
                     SendListArrFromServicEvent fromServicEvent = new SendListArrFromServicEvent();
-                    fromServicEvent.setSongIDs(songNames);
+                    fromServicEvent.setSongNames(songNames);
                     fromServicEvent.setAuthors(authors);
                     EventBus.getDefault().post(fromServicEvent);
-
                 }
                 SendSongMsgBeanEvent event = new SendSongMsgBeanEvent();
                 event.setSongMsgBean(bean);

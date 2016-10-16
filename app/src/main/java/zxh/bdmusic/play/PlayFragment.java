@@ -1,11 +1,14 @@
 package zxh.bdmusic.play;
 
+import android.app.DownloadManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,8 +24,11 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
+import zxh.bdmusic.baseclass.MyApp;
 import zxh.bdmusic.eventbus.SendPlayConditionEvent;
 import zxh.bdmusic.eventbus.SendPlayLastOrNextEvent;
 import zxh.bdmusic.playservice.MusicPlayService;
@@ -53,6 +59,9 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
     private SharedPreferences sp;
     private SharedPreferences.Editor sped;
     private SharedPreferences getSP;
+    private ImageButton btn_play_clickin_share;
+    private SongMsgBean songMsgBean;
+    private ImageButton btn_play_clickin_download;
 
 
     @Override
@@ -63,6 +72,8 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initView() {
 //        EventBus.getDefault().register(this);
+        btn_play_clickin_download = getViewLayout(R.id.btn_play_clickin_download);
+        btn_play_clickin_share = getViewLayout(R.id.btn_play_clickin_share);
         btn_play_clickin_pause = getViewLayout(R.id.btn_play_clickin_pause);
         btn_play_clickin_last = getViewLayout(R.id.btn_play_clickin_last);
         btn_play_clickin_next = getViewLayout(R.id.btn_play_clickin_next);
@@ -82,7 +93,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
         condition = getSP.getInt("condition", 0);
 
 
-        switch (condition%3) {
+        switch (condition % 3) {
             case 0:
                 btn_play_clickin_condition.setImageResource(R.mipmap.bt_list_button_roundplay_normal);
                 break;
@@ -102,11 +113,11 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
         btn_play_clickin_last.setOnClickListener(this);
         btn_play_clickin_next.setOnClickListener(this);
         btn_play_clickin_condition.setOnClickListener(this);
+        btn_play_clickin_share.setOnClickListener(this);
+        btn_play_clickin_download.setOnClickListener(this);
 
         Bundle bundleReceive = getArguments();
-        SongMsgBean bean = (SongMsgBean) bundleReceive.getSerializable("SongMsgBean");
-
-        Log.d("vvvvv", "bean.getBitrate().getSong_file_id():" + bean.getBitrate().getSong_file_id());
+        songMsgBean = (SongMsgBean) bundleReceive.getSerializable("SongMsgBean");
 
         PlayClickInMidFragment playClickInMidFragment = new PlayClickInMidFragment();
         playClickInMidFragment.setArguments(bundleReceive);
@@ -166,6 +177,12 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
                     }
                 }
             }).start();
+
+            if (mybinder.isPlaying()) {
+                btn_play_clickin_pause.setImageResource(R.mipmap.bt_notificationbar_pause);
+            } else {
+                btn_play_clickin_pause.setImageResource(R.mipmap.bt_notificationbar_play);
+            }
         }
 
         @Override
@@ -177,6 +194,14 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.btn_play_clickin_download:
+
+                break;
+
+            case R.id.btn_play_clickin_share:
+                showShare();
+                break;
+
             case R.id.btn_play_back:
                 manager = getActivity().getSupportFragmentManager();
                 manager.beginTransaction().setCustomAnimations(R.anim.part_no, R.anim.part_downdispear).remove(this).commit();
@@ -196,20 +221,22 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
 
                 break;
             case R.id.btn_play_clickin_last:
-
                 SendPlayLastOrNextEvent eventLast = new SendPlayLastOrNextEvent();
                 eventLast.setChoice(1);
                 EventBus.getDefault().post(eventLast);
+                btn_play_clickin_pause.setImageResource(R.mipmap.bt_notificationbar_pause);
                 break;
             case R.id.btn_play_clickin_next:
                 SendPlayLastOrNextEvent eventNext = new SendPlayLastOrNextEvent();
                 eventNext.setChoice(2);
                 EventBus.getDefault().post(eventNext);
+                btn_play_clickin_pause.setImageResource(R.mipmap.bt_notificationbar_pause);
+
                 break;
             case R.id.btn_play_clickin_condition:
                 sp = getActivity().getSharedPreferences("shared", Context.MODE_PRIVATE);
                 sped = sp.edit();
-                switch ((condition+1) % 3) {
+                switch ((condition + 1) % 3) {
                     case 0:
 
                         Toast.makeText(mContext, "循环播放", Toast.LENGTH_SHORT).show();
@@ -242,13 +269,8 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
                         condition++;
                         break;
 
-
                 }
-
-
                 break;
-
-
         }
     }
 
@@ -261,8 +283,60 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
         return m + ":" + s;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+
+    //分享  方法
+    private void showShare() {
+        ShareSDK.initSDK(getContext());
+        OnekeyShare oks = new OnekeyShare();
+//关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
+        oks.setTitle("分享歌曲");
+// titleUrl是标题的网络链接，QQ和QQ空间等使用
+        oks.setTitleUrl(songMsgBean.getBitrate().getFile_link());
+// text是分享文本，所有平台都需要这个字段
+        oks.setText(songMsgBean.getSonginfo().getTitle());
+// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+//oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+// url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl("http://sharesdk.cn");
+// comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setComment("我是测试评论文本");
+// site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite(getString(R.string.app_name));
+// siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl("http://sharesdk.cn");
+
+// 启动分享GUI
+        oks.show(getContext());
     }
+
+    public static void downloadSong(SongMsgBean songMsgBean) {
+        if (songMsgBean != null && songMsgBean.getBitrate() != null && songMsgBean.getBitrate().getFile_link() != null) {
+            DownloadManager downloadManager = (DownloadManager) MyApp.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+            Log.d("Tools", songMsgBean.getBitrate().getFile_link());
+            Uri mDownloadUri = Uri.parse(songMsgBean.getBitrate().getFile_link());
+            DownloadManager.Request request = new DownloadManager.Request(mDownloadUri);
+//            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+
+            // TODO: 16/10/16
+//            File folder = new File(StringVlaues.downloadPath);
+//            if (!(folder.exists() && folder.isDirectory())) {
+//                folder.mkdirs();
+//            }
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC,
+                    songMsgBean.getSonginfo().getTitle() + "-" + songMsgBean.getSonginfo().getAuthor() + ".mp3");
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+            long downloadId = downloadManager.enqueue(request);
+            DownloadSongBean downloadSongBean = new DownloadSongBean();
+            downloadSongBean.setDownloadId(downloadId);
+            downloadSongBean.setAuthor(songMsgBean.getSonginfo().getAuthor());
+            downloadSongBean.setTitle(songMsgBean.getSonginfo().getTitle());
+            downloadSongBean.setSongId(songMsgBean.getSonginfo().getSong_id());
+//            DBtool.getmDBtools().insertDownloadSong(downloadSongBean);
+        }
+    }
+
+
 }

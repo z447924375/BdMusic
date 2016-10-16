@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by dllo on 16/10/15.
  */
 public class SendListArrFromServicEvent {
-   private ArrayList<String> songIDs;
+   private ArrayList<String> songNames;
    private ArrayList<String> authors;
 
     public ArrayList<String> getAuthors() {
@@ -17,12 +17,11 @@ public class SendListArrFromServicEvent {
         this.authors = authors;
     }
 
-    public ArrayList<String> getSongIDs() {
-
-        return songIDs;
+    public ArrayList<String> getSongNames() {
+        return songNames;
     }
 
-    public void setSongIDs(ArrayList<String> songIDs) {
-        this.songIDs = songIDs;
+    public void setSongNames(ArrayList<String> songNames) {
+        this.songNames = songNames;
     }
 }

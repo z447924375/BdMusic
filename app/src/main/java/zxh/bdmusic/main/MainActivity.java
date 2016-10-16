@@ -80,6 +80,8 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
 
 
     private int con2;
+    private ArrayList<String> songNames;
+    private ArrayList<String> authors;
 
 
     @Override
@@ -118,6 +120,8 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
 
     @Override
     protected void inidate() {
+
+
         EventBus.getDefault().register(this);
         MyHelper helper = new MyHelper(this, "music.db", null, 1);
         database = helper.getWritableDatabase();
@@ -162,6 +166,7 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
         connection = new MyConnection();
         bindService(intent, connection, BIND_AUTO_CREATE);
 
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -181,14 +186,14 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
         sped.putInt("condition", condition);
         sped.commit();
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getevnet(SendListArrFromServicEvent fromServicEvent) {
         Log.d("dddd", "haha");
-        ArrayList<String> songIDs=fromServicEvent.getSongIDs();
-        ArrayList<String> authors=fromServicEvent.getAuthors();
+        songNames = fromServicEvent.getSongNames();
+        authors = fromServicEvent.getAuthors();
+
     }
-
-
 
     @Override
     public void onClick(View v) {
@@ -219,14 +224,21 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
 //
 //                }
                 mybinder.playNext(con % 3);
+                btn_play_pause.setImageResource(R.mipmap.bt_minibar_pause_normal);
 
                 break;
             case R.id.btn_play_song_list:
-                FragmentManager fm=getSupportFragmentManager();
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bd = new Bundle();
+                PlayListFragment listFragment = new PlayListFragment();
+                if (songNames != null && authors != null) {
+                    bd.putStringArrayList("songNames", songNames);
+                    bd.putStringArrayList("authors", authors);
+                    listFragment.setArguments(bd);
+                }
 
-                PlayListFragment listFragment=new PlayListFragment();
                 fm.beginTransaction().setCustomAnimations(R.anim.part_upshow, R.anim.part_no)
-                    .replace(R.id.main_all, listFragment).commit();
+                        .replace(R.id.main_all, listFragment).commit();
 
 //                showPopupWindow();
 
@@ -248,17 +260,21 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
         switch (k) {
             case 1:
                 mybinder.playLast();
+                btn_play_pause.setImageResource(R.mipmap.bt_minibar_pause_normal);
                 break;
             case 2:
                 SharedPreferences sharedPreferences2 = getSharedPreferences("con", MODE_PRIVATE);
                 con2 = sharedPreferences2.getInt("condition", 0);
                 mybinder.playNext(con2 % 3);
+                btn_play_pause.setImageResource(R.mipmap.bt_minibar_pause_normal);
                 break;
             case 11:
                 mybinder.playPause();
+                btn_play_pause.setImageResource(R.mipmap.bt_minibar_play_normal);
                 break;
             case 22:
                 mybinder.playStart();
+                btn_play_pause.setImageResource(R.mipmap.bt_minibar_pause_normal);
                 break;
         }
     }
@@ -290,13 +306,13 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mybinder = (MusicPlayService.Mybinder) service;
+
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
         }
     }
-
 
 
     @Override
