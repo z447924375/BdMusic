@@ -64,7 +64,7 @@ public class SongListRvAdapter extends RecyclerView.Adapter<SongListRvAdapter.My
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        ImageLoader.getInstance().displayImage(bean.getDiyInfo().get(position).getList_pic_small(), holder.mc_songlist_img, options);
+        ImageLoader.getInstance().displayImage(bean.getDiyInfo().get(position).getList_pic_large(), holder.mc_songlist_img, options);
         holder.mc_songlist_text1.setText(bean.getDiyInfo().get(position).getTitle());
         holder.mc_songlist_listennum.setText(bean.getDiyInfo().get(position).getListen_num() + "");
 

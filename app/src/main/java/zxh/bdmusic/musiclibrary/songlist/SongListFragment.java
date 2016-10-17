@@ -1,7 +1,6 @@
 package zxh.bdmusic.musiclibrary.songlist;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,7 +36,7 @@ public class SongListFragment extends BaseFragment {
     private Button btn_hotest;
     private Button btn_newest;
     private FragmentManager fm;
-    private SQLiteDatabase sqLiteDatabase;
+
 
 
     @Override
@@ -135,6 +134,7 @@ public class SongListFragment extends BaseFragment {
                 }
 
                 Intent intent = new Intent(getActivity(), MusicPlayService.class);
+                intent.putExtra("isfirst",false);
                 intent.putStringArrayListExtra("songIDs", songIDs);
                 intent.putStringArrayListExtra("songNames", songNames);
                 intent.putStringArrayListExtra("authors", authors);

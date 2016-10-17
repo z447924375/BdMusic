@@ -30,8 +30,7 @@
                     android:id="@+id/songlist_clickin_pic"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:src="@mipmap/ic_launcher" />
+                    android:layout_centerHorizontal="true" />
 
                 <TextView
                     android:id="@+id/songlist_clickin_tag"

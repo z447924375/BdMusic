@@ -171,7 +171,10 @@ public class SongListClickInFragment extends BaseFragment implements View.OnClic
         GridLayoutManager manager = new GridLayoutManager(mContext, 1);
         songlist_clickin_rv.setLayoutManager(manager);
 
-        ImageLoader.getInstance().displayImage(bean.getPic_300(), songlist_clickin_pic);
+        ImgAscyntask ascyntask = new ImgAscyntask();
+        ascyntask.execute(bean.getPic_500());
+
+        ImageLoader.getInstance().displayImage(bean.getPic_500(), songlist_clickin_pic);
         songlist_clickin_tag.setText("标签" + bean.getTag());
         songlist_clickin_listennum.setText(bean.getListenum());
         songlist_clickin_songnum.setText("/" + bean.getContent().size() + "首");
@@ -183,6 +186,7 @@ public class SongListClickInFragment extends BaseFragment implements View.OnClic
             public void CallBack(int position) {
 
                 Intent intent=new Intent(getActivity(),MusicPlayService.class);
+                intent.putExtra("isfirst",false);
                 intent.putStringArrayListExtra("songIDs", songIDs);
                 intent.putStringArrayListExtra("songNames", songNames);
                 intent.putStringArrayListExtra("authors", authors);
@@ -219,8 +223,7 @@ public class SongListClickInFragment extends BaseFragment implements View.OnClic
             }
         });
 
-        ImgAscyntask ascyntask = new ImgAscyntask();
-        ascyntask.execute(bean.getPic_300());
+
     }
 
     class ImgAscyntask extends AsyncTask<String, Integer, Bitmap> {

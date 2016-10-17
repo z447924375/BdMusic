@@ -79,7 +79,7 @@ public class ChartFragment extends BaseFragment implements AdapterView.OnItemCli
                 Gson gson = new Gson();
                 bean = gson.fromJson(response, ChartBean.class);
                 String chartClickInUrl = URLVlaues.TOP_SONG_FRONT + bean.getContent().get(position).getType() + "" + URLVlaues.TOP_SONG_BEHIND;
-                String chartClickInPicSrc = bean.getContent().get(position).getPic_s210();
+                String chartClickInPicSrc = bean.getContent().get(position).getPic_s444();
                 getChartClickInGsonData(chartClickInUrl);
                 ChartClickInFragment fragment = new ChartClickInFragment();
                 manager = getActivity().getSupportFragmentManager();

@@ -31,6 +31,7 @@ import zxh.bdmusic.baseclass.BaseFragment;
 import zxh.bdmusic.baseclass.MyApp;
 import zxh.bdmusic.eventbus.SendPlayConditionEvent;
 import zxh.bdmusic.eventbus.SendPlayLastOrNextEvent;
+import zxh.bdmusic.eventbus.SendPlayTimeEvent;
 import zxh.bdmusic.playservice.MusicPlayService;
 import zxh.bdmusic.playservice.SongMsgBean;
 
@@ -48,14 +49,11 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
     private ImageButton btn_play_clickin_next;
     private MusicPlayService.Mybinder mybinder;
     private PlayVpAdapter adapter;
-
     private SeekBar play_seekbar;
     private TextView playing_time;
     private TextView total_time;
-
     private ImageButton btn_play_clickin_condition;
     private int condition;
-    private SharedPreferences con;
     private SharedPreferences sp;
     private SharedPreferences.Editor sped;
     private SharedPreferences getSP;
@@ -71,7 +69,6 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initView() {
-//        EventBus.getDefault().register(this);
         btn_play_clickin_download = getViewLayout(R.id.btn_play_clickin_download);
         btn_play_clickin_share = getViewLayout(R.id.btn_play_clickin_share);
         btn_play_clickin_pause = getViewLayout(R.id.btn_play_clickin_pause);
@@ -119,15 +116,18 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
         Bundle bundleReceive = getArguments();
         songMsgBean = (SongMsgBean) bundleReceive.getSerializable("SongMsgBean");
 
-        PlayClickInMidFragment playClickInMidFragment = new PlayClickInMidFragment();
-        playClickInMidFragment.setArguments(bundleReceive);
+        PlayClickInMidFragment midFragment = new PlayClickInMidFragment();
+        PlayClickInLiricFragment liricFragment = new PlayClickInLiricFragment();
+        midFragment.setArguments(bundleReceive);
+        liricFragment.setArguments(bundleReceive);
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new PlayClickInLeftFragment());
-        fragments.add(playClickInMidFragment);
-        fragments.add(new PlayClickInLiricFragment());
+        fragments.add(midFragment);
+        fragments.add(liricFragment);
         adapter = new PlayVpAdapter(getChildFragmentManager(), fragments);
         play_vp.setAdapter(adapter);
         play_vp.setCurrentItem(1);
+        play_vp.setOffscreenPageLimit(2);
 
 
     }
@@ -136,8 +136,8 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mybinder = (MusicPlayService.Mybinder) service;
-            play_seekbar.setMax(mybinder.getTotalDuration());
-            total_time.setText(changeTime(mybinder.getMediaPlayer().getDuration()));
+
+//            total_time.setText(changeTime(mybinder.getMediaPlayer().getDuration()));
             play_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -164,12 +164,20 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
                             play_seekbar.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    play_seekbar.setProgress(mybinder.getCurrentPosition());
+                                    play_seekbar.setMax(mybinder.getMediaPlayer().getDuration());
+                                    play_seekbar.setProgress(mybinder.getMediaPlayer().getCurrentPosition());
                                     playing_time.setText(changeTime(mybinder.getMediaPlayer().getCurrentPosition()));
+                                    total_time.setText(changeTime(mybinder.getMediaPlayer().getDuration()));
+
+                                    SendPlayTimeEvent timeEvent = new SendPlayTimeEvent();
+                                    timeEvent.setPlayingTime(mybinder.getMediaPlayer().getCurrentPosition());
+                                    EventBus.getDefault().post(timeEvent);
+
+
                                 }
                             });
                             try {
-                                Thread.sleep(400);
+                                Thread.sleep(500);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }

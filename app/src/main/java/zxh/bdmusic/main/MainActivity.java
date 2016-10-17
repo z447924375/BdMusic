@@ -82,6 +82,8 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
     private int con2;
     private ArrayList<String> songNames;
     private ArrayList<String> authors;
+    private String singers;
+    private String titles;
 
 
     @Override
@@ -132,13 +134,27 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
                 song = song.replace("[", "");
                 song = song.replace("]", "");
                 position = cursor.getInt(cursor.getColumnIndex("position"));
+
+//                singers = cursor.getString(cursor.getColumnIndex("author"));
+//                singers = singers.replace("[", "");
+//                singers = singers.replace("]", "");
+//
+//                titles = cursor.getString(cursor.getColumnIndex("title"));
+//                titles = titles.replace("[", "");
+//                titles = titles.replace("]", "");
+//
+//                authors = turnToSongIdsList(singers);
+//                songNames=turnToSongIdsList(titles);
+
             }
             if (song != null) {
                 ArrayList<String> songIDs = turnToSongIdsList(song);
                 Intent intent = new Intent(this, MusicPlayService.class);
+                intent.putExtra("isfirst", true);
                 intent.putStringArrayListExtra("songIDs", songIDs);
                 intent.putExtra("position", position);
                 startService(intent);
+                btn_play_pause.setImageResource(R.mipmap.bt_minibar_play_normal);
 
             } else {
                 Log.d("kkkk", "song == null ******");
@@ -211,18 +227,6 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
                 }
                 break;
             case R.id.btn_play_song_next:
-//                switch (con % 3) {
-//                    case 0://循环
-//                        mybinder.playNext(0);
-//                        break;
-//                    case 1://随机
-//                        mybinder.playNext(1);
-//                        break;
-//                    case 2://单曲
-//                        mybinder.playNext(2);
-//                        break;
-//
-//                }
                 mybinder.playNext(con % 3);
                 btn_play_pause.setImageResource(R.mipmap.bt_minibar_pause_normal);
 
@@ -240,16 +244,21 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
                 fm.beginTransaction().setCustomAnimations(R.anim.part_upshow, R.anim.part_no)
                         .replace(R.id.main_all, listFragment).commit();
 
-//                showPopupWindow();
 
                 break;
             case R.id.main_play_ll:
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("SongMsgBean", bean);
-                PlayFragment playFragment = new PlayFragment();
-                playFragment.setArguments(bundle);
-                manager.beginTransaction().setCustomAnimations(R.anim.part_upshow, R.anim.part_no)
-                        .replace(R.id.main_all, playFragment).commit();
+
+                if (bean != null) {
+                    Bundle bundle = new Bundle();
+                    if (bundle!=null){
+                        bundle.putSerializable("SongMsgBean", bean);
+                        PlayFragment playFragment = new PlayFragment();
+                        playFragment.setArguments(bundle);
+                        manager.beginTransaction().setCustomAnimations(R.anim.part_upshow, R.anim.part_no)
+                                .replace(R.id.main_all, playFragment).commit();
+                    }
+
+                }
                 break;
         }
     }
@@ -284,7 +293,6 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         unbindService(connection);
-
 
     }
 
@@ -325,4 +333,6 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
         }
         return super.onTouchEvent(event);
     }
+
+
 }

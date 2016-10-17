@@ -49,7 +49,7 @@ public class MvRvAdapter extends RecyclerView.Adapter<MvRvAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        ImageLoader.getInstance().displayImage(bean.getResult().getMv_list().get(position).getThumbnail2(), holder.mv_img,options);
+        ImageLoader.getInstance().displayImage(bean.getResult().getMv_list().get(position).getThumbnail(), holder.mv_img,options);
         holder.mv_text1.setText(bean.getResult().getMv_list().get(position).getTitle());
         holder.mv_text2.setText(bean.getResult().getMv_list().get(position).getArtist());
     }

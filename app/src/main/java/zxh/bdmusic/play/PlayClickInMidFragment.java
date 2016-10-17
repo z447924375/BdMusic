@@ -65,9 +65,6 @@ public class PlayClickInMidFragment extends BaseFragment {
     @Override
     protected void initDate() {
         Bundle bundle = getArguments();
-//        String title = bundle.getString("title");
-//        String author = bundle.getString("author");
-//        String picSrc = bundle.getString("img");
         SongMsgBean bean = (SongMsgBean) bundle.getSerializable("SongMsgBean");
         ImageLoader.getInstance().displayImage(bean.getSonginfo().getPic_big(), play_clickin_mid_img, options);
         play_clickin_mid_title.setText(bean.getSonginfo().getTitle());

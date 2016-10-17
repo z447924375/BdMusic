@@ -53,6 +53,7 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
     private ImageButton chart_clickin_btn_share;
     private SQLiteDatabase sqLiteDatabase;
 
+
     @Override
     protected int setLayout() {
         return R.layout.mc_chart_clickin;
@@ -67,6 +68,7 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
         chart_clickin_btn_back = getViewLayout(R.id.chart_clickin_btn_back);
         chart_clickin_text_time = getViewLayout(R.id.chart_clickin_text_time);
         chart_clickin_btn_share = getViewLayout(R.id.chart_clickin_btn_share);
+
     }
 
     @Override
@@ -75,6 +77,23 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
         String chartClickInPicSrc = bundle.getString("chartClickInPicSrc");
         ImgAscyntask ascyntask = new ImgAscyntask();
         ascyntask.execute(chartClickInPicSrc);
+//
+//        Picasso.with(getContext()).load(chartClickInPicSrc).into(new Target() {
+//            @Override
+//            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                chart_clickin_appbar_ll.setBackground(new BitmapDrawable(bitmap));
+//            }
+//
+//            @Override
+//            public void onBitmapFailed(Drawable errorDrawable) {
+//
+//            }
+//
+//            @Override
+//            public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//            }
+//        });
         chart_clickin_btn_back.setOnClickListener(this);
         chart_clickin_btn_share.setOnClickListener(this);
         adapter = new ChartClickInRvAdapter(getContext());
@@ -105,6 +124,7 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
             public void click(int position) {
 
                 Intent intent = new Intent(getActivity(), MusicPlayService.class);
+                intent.putExtra("isfirst", false);
                 intent.putStringArrayListExtra("songIDs", songIDs);
                 intent.putStringArrayListExtra("songNames", songNames);
                 intent.putStringArrayListExtra("authors", authors);

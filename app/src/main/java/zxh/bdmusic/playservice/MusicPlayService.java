@@ -8,7 +8,6 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -32,7 +31,6 @@ import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
 public class MusicPlayService extends Service {
 
 
-
     public MusicPlayer getPlayer() {
         return player;
     }
@@ -50,6 +48,7 @@ public class MusicPlayService extends Service {
     private int position;
     private SQLiteDatabase sqLiteDatabase;
     private ContentValues values;
+    private boolean isFirstEntry;
 
     @Override
     public void onCreate() {
@@ -65,14 +64,21 @@ public class MusicPlayService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        songIDs = intent.getStringArrayListExtra("songIDs");
-        position = (int) intent.getExtras().get("position");
-        songNames = intent.getStringArrayListExtra("songNames");
-        authors = intent.getStringArrayListExtra("authors");
+        try {
+            songIDs = intent.getStringArrayListExtra("songIDs");position = (int) intent.getExtras().get("position");
+            isFirstEntry = (boolean) intent.getExtras().get("isfirst");
 
+            songNames = intent.getStringArrayListExtra("songNames");
+            authors = intent.getStringArrayListExtra("authors");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-
-        playSong(songIDs, position);
+        try {
+            playSong(songIDs, position, isFirstEntry);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -83,7 +89,7 @@ public class MusicPlayService extends Service {
         player.release();
     }
 
-    private void playSong(final ArrayList<String> songIDs, final int position) {
+    private void playSong(final ArrayList<String> songIDs, final int position, boolean firstEntry) {
         final StringRequest stringRequest = new StringRequest(URLVlaues.PLAY_FRONT + songIDs.get(position) + URLVlaues.PLAY_BEHIND, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -95,8 +101,6 @@ public class MusicPlayService extends Service {
                 values = new ContentValues();
                 values.put("song", String.valueOf(songIDs));
                 values.put("position", position);
-//                values.put("titles", String.valueOf(songNames));
-//                values.put("authors", String.valueOf(authors));
                 sqLiteDatabase.delete("music", null, null);
                 sqLiteDatabase.insert("music", "song", values);
                 if (songNames != null && authors != null) {
@@ -109,7 +113,15 @@ public class MusicPlayService extends Service {
                 event.setSongMsgBean(bean);
                 EventBus.getDefault().post(event);
                 player.playUrl(bean.getBitrate().getFile_link());
-                player.start();
+
+                if (isFirstEntry == true) {
+                    isFirstEntry = false;
+                } else {
+                    player.start();
+
+                }
+
+
                 player.mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
@@ -129,10 +141,10 @@ public class MusicPlayService extends Service {
 
     public void Next() {
         if (position < songIDs.size() - 1) {
-            playSong(songIDs, position + 1);
+            playSong(songIDs, position + 1, false);
             position += 1;
         } else {
-            playSong(songIDs, 0);
+            playSong(songIDs, 0, false);
             position = 0;
         }
 
@@ -150,25 +162,22 @@ public class MusicPlayService extends Service {
 
             switch (playCondition) {
                 case 0://循环播放
-                    Log.d("Mybinder", "循环");
                     if (position < songIDs.size() - 1) {
-                        playSong(songIDs, position + 1);
+                        playSong(songIDs, position + 1, false);
                         position += 1;
                     } else {
-                        playSong(songIDs, 0);
+                        playSong(songIDs, 0, false);
                         position = 0;
                     }
                     break;
                 case 1://随机播放
-                    Log.d("Mybinder", "随机");
                     Random random = new Random();
                     position = random.nextInt(songIDs.size());
-                    playSong(songIDs, position);
+                    playSong(songIDs, position, false);
                     break;
 
                 case 2://单曲循环
-                    Log.d("Mybinder", "单曲");
-                    playSong(songIDs, position);
+                    playSong(songIDs, position, false);
                     break;
 
             }
@@ -178,10 +187,10 @@ public class MusicPlayService extends Service {
 
         public void playLast() {
             if (position > 0) {
-                playSong(songIDs, position - 1);
+                playSong(songIDs, position - 1, false);
                 position -= 1;
             } else {
-                playSong(songIDs, songIDs.size() - 1);
+                playSong(songIDs, songIDs.size() - 1, false);
                 position = songIDs.size() - 1;
             }
         }
@@ -195,18 +204,12 @@ public class MusicPlayService extends Service {
             player.stop();
         }
 
-        public void playRelease() {
-            player.release();
-        }
 
         public void playStart() {
             player.start();
         }
 
 
-        public void seekTo(int msec) {
-            player.mediaPlayer.seekTo(msec);
-        }
 
         public boolean isPlaying() {
             if (player.mediaPlayer != null) {
