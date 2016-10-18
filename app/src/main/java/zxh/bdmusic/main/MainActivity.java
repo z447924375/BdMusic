@@ -2,12 +2,17 @@ package zxh.bdmusic.main;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -26,6 +31,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -75,12 +81,15 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
     private SharedPreferences.Editor sped;
 
 
-
     private int con2;
     private ArrayList<String> songNames;
     private ArrayList<String> authors;
     private String singers;
     private String titles;
+    private MyBroadCastReceiver receiver;
+    private NotificationManager notificationManager;
+    private RemoteViews remo;
+    private Notification not;
 
 
     @Override
@@ -119,7 +128,12 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
 
     @Override
     protected void inidate() {
-
+        receiver = new MyBroadCastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("pause");
+        filter.addAction("next");
+        filter.addAction("last");
+        registerReceiver(receiver, filter);
 
         EventBus.getDefault().register(this);
         MyHelper helper = new MyHelper(this, "music.db", null, 1);
@@ -131,17 +145,6 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
                 song = song.replace("[", "");
                 song = song.replace("]", "");
                 position = cursor.getInt(cursor.getColumnIndex("position"));
-
-//                singers = cursor.getString(cursor.getColumnIndex("author"));
-//                singers = singers.replace("[", "");
-//                singers = singers.replace("]", "");
-//
-//                titles = cursor.getString(cursor.getColumnIndex("title"));
-//                titles = titles.replace("[", "");
-//                titles = titles.replace("]", "");
-//
-//                authors = turnToSongIdsList(singers);
-//                songNames=turnToSongIdsList(titles);
 
             }
             if (song != null) {
@@ -157,7 +160,8 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
                 Log.d("kkkk", "song == null ******");
             }
         }
-
+        SharedPreferences sharedPreferences = getSharedPreferences("con", MODE_PRIVATE);
+        con = sharedPreferences.getInt("condition", 0);
 
         btn_play_pause.setOnClickListener(this);
         btn_play_next.setOnClickListener(this);
@@ -185,10 +189,10 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ReceiveEvent(SendSongMsgBeanEvent sendSongMsgBeanEvent) {
         bean = sendSongMsgBeanEvent.getSongMsgBean();
-
         play_song_singer.setText(bean.getSonginfo().getAuthor());
         play_song_name.setText(bean.getSonginfo().getTitle());
         ImageLoader.getInstance().displayImage(bean.getSonginfo().getPic_big(), play_song_pic, options);
+        showNotification(bean.getSonginfo().getTitle(),bean.getSonginfo().getAuthor(),bean.getSonginfo().getPic_big());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -210,8 +214,7 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        SharedPreferences sharedPreferences = getSharedPreferences("con", MODE_PRIVATE);
-        con = sharedPreferences.getInt("condition", 0);
+
         switch (v.getId()) {
             case R.id.btn_play_song_pause:
 
@@ -225,7 +228,7 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
                 break;
             case R.id.btn_play_song_next:
 
-                if (mybinder!=null){
+                if (mybinder != null) {
                     mybinder.playNext(con % 3);
                     btn_play_pause.setImageResource(R.mipmap.bt_minibar_pause_normal);
                 }
@@ -251,7 +254,7 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
 
                 if (bean != null) {
                     Bundle bundle = new Bundle();
-                    if (bundle!=null){
+                    if (bundle != null) {
                         bundle.putSerializable("SongMsgBean", bean);
                         PlayFragment playFragment = new PlayFragment();
                         playFragment.setArguments(bundle);
@@ -294,19 +297,7 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         unbindService(connection);
-
-    }
-
-    private void showNotify() {
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        Notification.Builder builder = new Notification.Builder(this);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setTicker("百度音乐");
-        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.notify_custom);
-        builder.setContent(remoteViews);
-        Notification notification = builder.build();
-        manager.notify(300, notification);
-
+        unregisterReceiver(receiver);
     }
 
 
@@ -317,22 +308,73 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
             mybinder = (MusicPlayService.Mybinder) service;
 
         }
-
         @Override
         public void onServiceDisconnected(ComponentName name) {
         }
     }
 
-//
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//
-//        if (mPopWindow != null && mPopWindow.isShowing()) {
-//            mPopWindow.dismiss();
-//            mPopWindow = null;
-//        }
-//        return super.onTouchEvent(event);
-//    }
 
+    private void showNotification(String title, String singer, final String url) {
 
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setSmallIcon(R.mipmap.icon);
+        builder.setTicker(title);
+
+        remo = new RemoteViews(getPackageName(), R.layout.notify_custom);
+        ImageLoader.getInstance().loadImage(url, new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                remo.setImageViewBitmap(R.id.notify_pic, loadedImage);
+                if (not != null) {
+                    notificationManager.notify(210, not);
+                }
+            }
+        });
+        remo.setTextViewText(R.id.notify_title, title);
+        remo.setTextViewText(R.id.notify_author, singer);
+
+        Intent notificationIntentlast = new Intent("last");
+        PendingIntent pendingIntentlast = PendingIntent.getBroadcast(this, 0, notificationIntentlast, PendingIntent.FLAG_UPDATE_CURRENT);
+        remo.setOnClickPendingIntent(R.id.notify_prev, pendingIntentlast);
+
+        Intent notificationIntentnext = new Intent("next");
+        PendingIntent pendingIntentnext = PendingIntent.getBroadcast(this, 0, notificationIntentnext, PendingIntent.FLAG_UPDATE_CURRENT);
+        remo.setOnClickPendingIntent(R.id.notify_next, pendingIntentnext);
+
+        Intent notificationIntentpause = new Intent("pause");
+        PendingIntent pendingIntentplay = PendingIntent.getBroadcast(this, 0, notificationIntentpause, PendingIntent.FLAG_UPDATE_CURRENT);
+        remo.setOnClickPendingIntent(R.id.notify_pause, pendingIntentplay);
+
+        builder.setContent(remo);
+        not = builder.build();
+        not.bigContentView = remo;
+        notificationManager.notify(210, not);
+    }
+
+    private class MyBroadCastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String action = intent.getAction();
+
+            switch (action) {
+                case "pause":
+                    if (mybinder.getMediaPlayer().isPlaying()){
+                        mybinder.playPause();
+                    }else {
+                        mybinder.playStart();
+                    }
+                    break;
+                case "last":
+                    mybinder.playLast();
+                    break;
+                case "next":
+                    mybinder.playNext(con%3);
+                    break;
+            }
+
+        }
+    }
 }

@@ -114,6 +114,7 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
             authors.add(bean.getSong_list().get(i).getAuthor());
             Log.d("ChartClickInFragment", bean.getSong_list().get(i).getTitle()
                     + bean.getSong_list().get(i).getAuthor());
+            
 
         }
         chart_clickin_rv.setAdapter(adapter);

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
 
     <ImageView
         android:id="@+id/notify_pic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_margin="10dp"/>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_toEndOf="@+id/notify_pic"
         android:orientation="vertical">
 
@@ -19,22 +21,22 @@
             android:id="@+id/notify_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="aaa" />
+            android:text="aaa"/>
 
         <TextView
             android:id="@+id/notify_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="xxx" />
+            android:text="xxx"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
+        android:layout_toEndOf="@+id/linearLayout"
         android:orientation="horizontal">
 
         <ImageButton
@@ -42,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@mipmap/bt_notificationbar_prev" />
+            android:background="@mipmap/bt_notificationbar_prev"/>
 
         <ImageButton
             android:id="@+id/notify_pause"
@@ -50,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/bt_notificationbar_pause" />
+            android:background="@mipmap/bt_notificationbar_pause"/>
 
         <ImageButton
             android:id="@+id/notify_next"
@@ -58,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/bt_notificationbar_next" />
+            android:background="@mipmap/bt_notificationbar_next"/>
 
     </LinearLayout>
 

@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import cn.sharesdk.framework.ShareSDK;
@@ -30,11 +31,11 @@ import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
 import zxh.bdmusic.baseclass.MyApp;
 import zxh.bdmusic.bean.DownloadSongBean;
+import zxh.bdmusic.bean.SongMsgBean;
+import zxh.bdmusic.playservice.MusicPlayService;
 import zxh.bdmusic.tools.eventbus.SendPlayConditionEvent;
 import zxh.bdmusic.tools.eventbus.SendPlayLastOrNextEvent;
 import zxh.bdmusic.tools.eventbus.SendPlayTimeEvent;
-import zxh.bdmusic.playservice.MusicPlayService;
-import zxh.bdmusic.bean.SongMsgBean;
 
 /**
  * Created by dllo on 16/10/11.
@@ -203,7 +204,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.btn_play_clickin_download:
-
+                downloadSong(songMsgBean);
                 break;
 
             case R.id.btn_play_clickin_share:
@@ -326,16 +327,16 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
             Log.d("Tools", songMsgBean.getBitrate().getFile_link());
             Uri mDownloadUri = Uri.parse(songMsgBean.getBitrate().getFile_link());
             DownloadManager.Request request = new DownloadManager.Request(mDownloadUri);
-//            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
 
             // TODO: 16/10/16
-//            File folder = new File(StringVlaues.downloadPath);
-//            if (!(folder.exists() && folder.isDirectory())) {
-//                folder.mkdirs();
-//            }
+            File folder = new File("/sdcard/ddddd");
+            if (!(folder.exists() && folder.isDirectory())) {
+                folder.mkdirs();
+            }
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC,
                     songMsgBean.getSonginfo().getTitle() + "-" + songMsgBean.getSonginfo().getAuthor() + ".mp3");
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             long downloadId = downloadManager.enqueue(request);
             DownloadSongBean downloadSongBean = new DownloadSongBean();
             downloadSongBean.setDownloadId(downloadId);

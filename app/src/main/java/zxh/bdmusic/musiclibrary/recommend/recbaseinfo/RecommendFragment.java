@@ -29,7 +29,7 @@ import zxh.bdmusic.musiclibrary.songlist.SongListRvAdapter;
  * Created by dllo on 16/9/20.
  */
 public class RecommendFragment extends BaseFragment {
-   private ArrayList<RecommendBean> arrayList = new ArrayList<>();
+    ArrayList<RecommendBean> arrayList = new ArrayList<>();
     private RecommendFragment recommendFragment;
     private RecommendBean bean;
     private RecyclerView rv;
