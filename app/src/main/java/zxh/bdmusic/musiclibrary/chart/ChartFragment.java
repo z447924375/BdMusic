@@ -16,9 +16,11 @@ import org.greenrobot.eventbus.EventBus;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.baseclass.VolleySingleton;
-import zxh.bdmusic.eventbus.SendChartClickInBeanEvent;
-import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
+import zxh.bdmusic.tools.VolleySingleton;
+import zxh.bdmusic.bean.ChartBean;
+import zxh.bdmusic.bean.ChartClickInBean;
+import zxh.bdmusic.tools.eventbus.SendChartClickInBeanEvent;
+import zxh.bdmusic.usedvalues.URLVlaues;
 
 /**
  * Created by dllo on 16/9/20.

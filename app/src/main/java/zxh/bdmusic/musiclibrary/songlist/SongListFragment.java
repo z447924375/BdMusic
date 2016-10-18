@@ -18,11 +18,12 @@ import java.util.ArrayList;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.baseclass.VolleySingleton;
-import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
+import zxh.bdmusic.bean.SongListBean;
+import zxh.bdmusic.tools.VolleySingleton;
+import zxh.bdmusic.usedvalues.URLVlaues;
 import zxh.bdmusic.musiclibrary.recommend.recbaseinfo.OnListenerCallBack;
 import zxh.bdmusic.musiclibrary.recommend.songlistclickin.SongClickInMsgCallback;
-import zxh.bdmusic.musiclibrary.recommend.songlistclickin.SongListClickInBean;
+import zxh.bdmusic.bean.SongListClickInBean;
 import zxh.bdmusic.musiclibrary.recommend.songlistclickin.SongListClickInFragment;
 import zxh.bdmusic.playservice.MusicPlayService;
 

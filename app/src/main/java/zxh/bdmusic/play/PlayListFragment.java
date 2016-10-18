@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.main.PlayLvAdapter;
 
 /**
  * Created by dllo on 16/10/15.

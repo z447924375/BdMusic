@@ -12,20 +12,21 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import zxh.bdmusic.R;
+import zxh.bdmusic.bean.ChartBean;
 
 /**
  * Created by dllo on 16/9/22.
  */
 public class ChartAdapter extends BaseAdapter {
-    DisplayImageOptions options;
+  private   DisplayImageOptions options;
 
     public ChartAdapter(Context context) {
         this.context = context;
     }
 
-    Context context;
+   private Context context;
 
-    ChartBean bean = new ChartBean();
+   private ChartBean bean = new ChartBean();
 
     public void setBean(ChartBean bean) {
         this.bean = bean;

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.eventbus.SendVpChangePosEvent;
+import zxh.bdmusic.tools.eventbus.SendVpChangePosEvent;
 import zxh.bdmusic.musiclibrary.chart.ChartFragment;
 import zxh.bdmusic.musiclibrary.karaoke.KaraokeFragment;
 import zxh.bdmusic.musiclibrary.mv.MvFragment;

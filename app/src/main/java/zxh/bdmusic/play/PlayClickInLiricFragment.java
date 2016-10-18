@@ -22,15 +22,15 @@ import java.util.List;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.eventbus.SendPlayTimeEvent;
-import zxh.bdmusic.eventbus.SendSongMsgBeanEvent;
+import zxh.bdmusic.tools.eventbus.SendPlayTimeEvent;
+import zxh.bdmusic.tools.eventbus.SendSongMsgBeanEvent;
 import zxh.bdmusic.play.lrc.DefaultLrcBuilder;
 import zxh.bdmusic.play.lrc.ILrcBuilder;
 import zxh.bdmusic.play.lrc.ILrcView;
 import zxh.bdmusic.play.lrc.ILrcViewListener;
 import zxh.bdmusic.play.lrc.LrcRow;
 import zxh.bdmusic.playservice.MusicPlayService;
-import zxh.bdmusic.playservice.SongMsgBean;
+import zxh.bdmusic.bean.SongMsgBean;
 
 /**
  * Created by dllo on 16/10/12.
@@ -118,10 +118,8 @@ public class PlayClickInLiricFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (myBinder.getMediaPlayer() != null) {
-            myBinder.getMediaPlayer().stop();
-        }
         EventBus.getDefault().unregister(this);
+        getActivity().unbindService(connection);
 
     }
 
@@ -198,7 +196,7 @@ public class PlayClickInLiricFragment extends BaseFragment {
         }
     }
 
-    public String changeTime(int duration) {
+    private String changeTime(int duration) {
         int minute = duration / 1000 / 60;
         int seconds = duration / 1000 % 60;
         String m = String.valueOf(minute);

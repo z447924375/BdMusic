@@ -29,8 +29,8 @@ import java.net.URL;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.eventbus.SendSongMsgBeanEvent;
-import zxh.bdmusic.playservice.SongMsgBean;
+import zxh.bdmusic.tools.eventbus.SendSongMsgBeanEvent;
+import zxh.bdmusic.bean.SongMsgBean;
 
 /**
  * Created by dllo on 16/10/12.
@@ -78,7 +78,7 @@ public class PlayClickInMidFragment extends BaseFragment {
        SongMsgBean mSongMsgBean = sendSongMsgBeanEvent.getSongMsgBean();
         play_clickin_mid_author.setText(mSongMsgBean.getSonginfo().getAuthor());
         play_clickin_mid_title.setText(mSongMsgBean.getSonginfo().getTitle());
-        ImageLoader.getInstance().displayImage(mSongMsgBean.getSonginfo().getPic_big(), play_clickin_mid_img, options);
+        ImageLoader.getInstance().displayImage(mSongMsgBean.getSonginfo().getPic_huge(), play_clickin_mid_img, options);
         ImgAscyntask ascyntask=new ImgAscyntask();
         ascyntask.execute(mSongMsgBean.getSonginfo().getPic_big());
     }

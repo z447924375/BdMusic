@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import zxh.bdmusic.R;
+import zxh.bdmusic.bean.SongListClickInBean;
 import zxh.bdmusic.musiclibrary.recommend.recbaseinfo.OnListenerCallBack;
 
 /**

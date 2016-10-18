@@ -14,6 +14,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import zxh.bdmusic.R;
+import zxh.bdmusic.bean.ChartClickInBean;
 
 /**
  * Created by dllo on 16/10/10.

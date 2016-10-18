@@ -29,11 +29,12 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
 import zxh.bdmusic.baseclass.MyApp;
-import zxh.bdmusic.eventbus.SendPlayConditionEvent;
-import zxh.bdmusic.eventbus.SendPlayLastOrNextEvent;
-import zxh.bdmusic.eventbus.SendPlayTimeEvent;
+import zxh.bdmusic.bean.DownloadSongBean;
+import zxh.bdmusic.tools.eventbus.SendPlayConditionEvent;
+import zxh.bdmusic.tools.eventbus.SendPlayLastOrNextEvent;
+import zxh.bdmusic.tools.eventbus.SendPlayTimeEvent;
 import zxh.bdmusic.playservice.MusicPlayService;
-import zxh.bdmusic.playservice.SongMsgBean;
+import zxh.bdmusic.bean.SongMsgBean;
 
 /**
  * Created by dllo on 16/10/11.
@@ -127,7 +128,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
         adapter = new PlayVpAdapter(getChildFragmentManager(), fragments);
         play_vp.setAdapter(adapter);
         play_vp.setCurrentItem(1);
-        play_vp.setOffscreenPageLimit(2);
+//        play_vp.setOffscreenPageLimit(2);
 
 
     }
@@ -137,7 +138,6 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
         public void onServiceConnected(ComponentName name, IBinder service) {
             mybinder = (MusicPlayService.Mybinder) service;
 
-//            total_time.setText(changeTime(mybinder.getMediaPlayer().getDuration()));
             play_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -346,5 +346,9 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unbindService(connection);
+    }
 }

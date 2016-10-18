@@ -45,7 +45,8 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.baseclass.VolleySingleton;
+import zxh.bdmusic.tools.VolleySingleton;
+import zxh.bdmusic.bean.SongListClickInBean;
 import zxh.bdmusic.musiclibrary.recommend.recbaseinfo.OnListenerCallBack;
 import zxh.bdmusic.musiclibrary.songlist.SongListRvAdapter;
 import zxh.bdmusic.playservice.MusicPlayService;
@@ -54,10 +55,10 @@ import zxh.bdmusic.playservice.MusicPlayService;
  * Created by dllo on 16/9/29.
  */
 public class SongListClickInFragment extends BaseFragment implements View.OnClickListener {
-    ArrayList<String>songNames=new ArrayList<>();
-    ArrayList<String>authors=new ArrayList<>();
-    ArrayList<String> songIDs = new ArrayList<>();
-    SongListClickInBean bean = new SongListClickInBean();
+    private ArrayList<String> songNames = new ArrayList<>();
+    private ArrayList<String> authors = new ArrayList<>();
+    private ArrayList<String> songIDs = new ArrayList<>();
+    private SongListClickInBean bean = new SongListClickInBean();
     private RecyclerView songlist_clickin_rv;
     private ImageView songlist_clickin_pic;
     private TextView songlist_clickin_tag;
@@ -82,7 +83,7 @@ public class SongListClickInFragment extends BaseFragment implements View.OnClic
 
     @Override
     protected void initView() {
-        ShareSDK.initSDK(getContext(),"sharesdk的appkey");
+        ShareSDK.initSDK(getContext(), "sharesdk的appkey");
 
         songlist_clickin_rv = getViewLayout(R.id.songlist_clickin_rv);
         songlist_clickin_pic = getViewLayout(R.id.songlist_clickin_pic);
@@ -185,8 +186,8 @@ public class SongListClickInFragment extends BaseFragment implements View.OnClic
             @Override
             public void CallBack(int position) {
 
-                Intent intent=new Intent(getActivity(),MusicPlayService.class);
-                intent.putExtra("isfirst",false);
+                Intent intent = new Intent(getActivity(), MusicPlayService.class);
+                intent.putExtra("isfirst", false);
                 intent.putStringArrayListExtra("songIDs", songIDs);
                 intent.putStringArrayListExtra("songNames", songNames);
                 intent.putStringArrayListExtra("authors", authors);

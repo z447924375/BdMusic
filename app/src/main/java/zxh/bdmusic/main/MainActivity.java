@@ -16,12 +16,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
@@ -37,10 +35,7 @@ import java.util.ArrayList;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseActy;
-import zxh.bdmusic.eventbus.SendListArrFromServicEvent;
-import zxh.bdmusic.eventbus.SendPlayConditionEvent;
-import zxh.bdmusic.eventbus.SendPlayLastOrNextEvent;
-import zxh.bdmusic.eventbus.SendSongMsgBeanEvent;
+import zxh.bdmusic.bean.SongMsgBean;
 import zxh.bdmusic.live.LiveFragment;
 import zxh.bdmusic.mine.MineFragment;
 import zxh.bdmusic.musiclibrary.musicllibbaseinfo.MusicLibFragment;
@@ -48,7 +43,10 @@ import zxh.bdmusic.play.PlayFragment;
 import zxh.bdmusic.play.PlayListFragment;
 import zxh.bdmusic.playservice.MusicPlayService;
 import zxh.bdmusic.playservice.MyHelper;
-import zxh.bdmusic.playservice.SongMsgBean;
+import zxh.bdmusic.tools.eventbus.SendListArrFromServicEvent;
+import zxh.bdmusic.tools.eventbus.SendPlayConditionEvent;
+import zxh.bdmusic.tools.eventbus.SendPlayLastOrNextEvent;
+import zxh.bdmusic.tools.eventbus.SendSongMsgBeanEvent;
 import zxh.bdmusic.trends.TrendsFragment;
 
 public class MainActivity extends BaseActy implements View.OnClickListener {
@@ -76,7 +74,6 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
     private SharedPreferences sp;
     private SharedPreferences.Editor sped;
 
-    private PopupWindow mPopWindow;
 
 
     private int con2;
@@ -227,8 +224,12 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
                 }
                 break;
             case R.id.btn_play_song_next:
-                mybinder.playNext(con % 3);
-                btn_play_pause.setImageResource(R.mipmap.bt_minibar_pause_normal);
+
+                if (mybinder!=null){
+                    mybinder.playNext(con % 3);
+                    btn_play_pause.setImageResource(R.mipmap.bt_minibar_pause_normal);
+                }
+
 
                 break;
             case R.id.btn_play_song_list:
@@ -322,17 +323,16 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
         }
     }
 
-
-    @Override
-
-    public boolean onTouchEvent(MotionEvent event) {
-
-        if (mPopWindow != null && mPopWindow.isShowing()) {
-            mPopWindow.dismiss();
-            mPopWindow = null;
-        }
-        return super.onTouchEvent(event);
-    }
+//
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//
+//        if (mPopWindow != null && mPopWindow.isShowing()) {
+//            mPopWindow.dismiss();
+//            mPopWindow = null;
+//        }
+//        return super.onTouchEvent(event);
+//    }
 
 
 }

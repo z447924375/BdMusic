@@ -17,19 +17,23 @@ import com.youth.banner.Banner;
 import java.util.ArrayList;
 
 import zxh.bdmusic.R;
+import zxh.bdmusic.bean.RecommendBean;
+import zxh.bdmusic.usedvalues.RecItemControlValues;
 
 /**
  * Created by dllo on 16/9/20.
  */
 public class RecommendAdapter extends RecyclerView.Adapter implements View.OnClickListener {
     OnListenerCallBack onListenerCallBack;
+
     public void setOnListenerCallBack(OnListenerCallBack onListenerCallBack) {
         this.onListenerCallBack = onListenerCallBack;
     }
+
     /*****/
     DisplayImageOptions options;
-    Context context;
-    RecommendBean bean=new RecommendBean();
+    private Context context;
+    private RecommendBean bean = new RecommendBean();
 
     public void setBean(RecommendBean bean) {
         this.bean = bean;
@@ -51,7 +55,6 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
     public int getItemViewType(int position) {
         return bean.getModule().get(position).getPos();
     }
-
 
 
     @Override
@@ -142,14 +145,13 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
                 focusViewHolder.recommend_banner.setImages(imgsrcs);
 
 
-
                 break;
             case 2:
                 EntryViewHolder entryViewHolder = (EntryViewHolder) holder;
-                ImageLoader.getInstance().displayImage(bean.getResult().getEntry().getResult().get(0).getIcon(), entryViewHolder.img_entry_singer,options);
-                ImageLoader.getInstance().displayImage(bean.getResult().getEntry().getResult().get(1).getIcon(), entryViewHolder.img_entry_classify,options);
-                ImageLoader.getInstance().displayImage(bean.getResult().getEntry().getResult().get(2).getIcon(), entryViewHolder.img_entry_radio,options);
-                ImageLoader.getInstance().displayImage(bean.getResult().getEntry().getResult().get(3).getIcon(), entryViewHolder.img_entry_member,options);
+                ImageLoader.getInstance().displayImage(bean.getResult().getEntry().getResult().get(0).getIcon(), entryViewHolder.img_entry_singer, options);
+                ImageLoader.getInstance().displayImage(bean.getResult().getEntry().getResult().get(1).getIcon(), entryViewHolder.img_entry_classify, options);
+                ImageLoader.getInstance().displayImage(bean.getResult().getEntry().getResult().get(2).getIcon(), entryViewHolder.img_entry_radio, options);
+                ImageLoader.getInstance().displayImage(bean.getResult().getEntry().getResult().get(3).getIcon(), entryViewHolder.img_entry_member, options);
                 entryViewHolder.text_entry_singer.setText(bean.getResult().getEntry().getResult().get(0).getTitle());
                 entryViewHolder.text_entry_classify.setText(bean.getResult().getEntry().getResult().get(1).getTitle());
                 entryViewHolder.text_entry_radio.setText(bean.getResult().getEntry().getResult().get(2).getTitle());
@@ -166,7 +168,7 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
                 break;
             case 4://设置歌单推荐
                 SixImgViewHolder diyViewHolder = (SixImgViewHolder) holder;
-                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), diyViewHolder.songlist_recommend_pictrul,options);
+                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), diyViewHolder.songlist_recommend_pictrul, options);
                 diyViewHolder.songlist_recommend_title.setText(bean.getModule().get(pos - 1).getTitle());
                 diyViewHolder.songlist_recommend_more.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -176,12 +178,12 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
                 });
 
                 for (int i = 0; i < bean.getResult().getDiy().getResult().size(); i++) {
-                    ImageLoader.getInstance().displayImage(bean.getResult().getDiy().getResult().get(i).getPic(), diyViewHolder.songlist_recommend_imgs[i],options);
+                    ImageLoader.getInstance().displayImage(bean.getResult().getDiy().getResult().get(i).getPic(), diyViewHolder.songlist_recommend_imgs[i], options);
                     final int finalI = i;
                     diyViewHolder.songlist_recommend_imgs[i].setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                           onListenerCallBack.CallBack(RecItemControlValues.SONGLIST_RECOMMEND_IMG_NUMS[finalI]);
+                            onListenerCallBack.CallBack(RecItemControlValues.SONGLIST_RECOMMEND_IMG_NUMS[finalI]);
                         }
                     });
                     diyViewHolder.songlist_recommend_texts[i].setText(bean.getResult().getDiy().getResult().get(i).getTitle());
@@ -193,7 +195,7 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
                 break;
             case 6:
                 SixImgViewHolder newCdViewHolder = (SixImgViewHolder) holder;
-                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), newCdViewHolder.songlist_recommend_pictrul,options);
+                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), newCdViewHolder.songlist_recommend_pictrul, options);
                 newCdViewHolder.songlist_recommend_title.setText(bean.getModule().get(position).getTitle());
                 newCdViewHolder.songlist_recommend_more.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -203,7 +205,7 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
                 });
 
                 for (int i = 0; i < 6; i++) {
-                    ImageLoader.getInstance().displayImage(bean.getResult().getMix_1().getResult().get(i).getPic(), newCdViewHolder.songlist_recommend_imgs[i],options);
+                    ImageLoader.getInstance().displayImage(bean.getResult().getMix_1().getResult().get(i).getPic(), newCdViewHolder.songlist_recommend_imgs[i], options);
                     final int finalI = i;
                     newCdViewHolder.songlist_recommend_imgs[i].setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -219,11 +221,11 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
                 break;
             case 7:
                 ThreeImgViewHolder hotAlbumViewHolder = (ThreeImgViewHolder) holder;
-                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), hotAlbumViewHolder.hot_album_pictrul,options);
+                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), hotAlbumViewHolder.hot_album_pictrul, options);
                 hotAlbumViewHolder.hot_album_title.setText(bean.getModule().get(position).getTitle());
 
                 for (int i = 0; i < 3; i++) {
-                    ImageLoader.getInstance().displayImage(bean.getResult().getMix_22().getResult().get(i).getPic(), hotAlbumViewHolder.hot_album_pics[i],options);
+                    ImageLoader.getInstance().displayImage(bean.getResult().getMix_22().getResult().get(i).getPic(), hotAlbumViewHolder.hot_album_pics[i], options);
                     hotAlbumViewHolder.hot_album_texts[i].setText(bean.getResult().getMix_22().getResult().get(i).getTitle());
                     hotAlbumViewHolder.hot_album_singers[i].setText(bean.getResult().getMix_22().getResult().get(i).getAuthor());
 
@@ -235,11 +237,11 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
                 break;
             case 9:
                 SceneViewHolder sceneViewHolder = (SceneViewHolder) holder;
-                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), sceneViewHolder.scene_radio_icon,options);
+                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), sceneViewHolder.scene_radio_icon, options);
                 sceneViewHolder.scene_radio_title.setText(bean.getModule().get(pos - 1).getTitle());
                 for (int i = 0; i < 4; i++) {
                     ImageLoader.getInstance().displayImage(bean.getResult().getScene().getResult().getAction().get(i).getIcon_ios()
-                            , sceneViewHolder.scene_radio_btns[i],options);
+                            , sceneViewHolder.scene_radio_btns[i], options);
                     sceneViewHolder.scene_radio_texts[i].setText(bean.getResult().getScene().getResult().getAction().get(i).getScene_name());
 
                 }
@@ -247,10 +249,10 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
             case 10:
                 RecsongViewHolder recsongViewHolder = (RecsongViewHolder) holder;
                 recsongViewHolder.recsong_title.setText(bean.getModule().get(pos - 1).getTitle());
-                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), recsongViewHolder.recsong_pictrul,options);
+                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), recsongViewHolder.recsong_pictrul, options);
                 for (int i = 0; i < 3; i++) {
                     ImageLoader.getInstance().displayImage(bean.getResult().getRecsong().getResult().get(i).getPic_premium()
-                            , recsongViewHolder.recsong_pics[i],options);
+                            , recsongViewHolder.recsong_pics[i], options);
                     recsongViewHolder.recsong_text_items[i].setText(bean.getResult().getRecsong().getResult().get(i).getTitle());
                     recsongViewHolder.recsong_singers[i].setText(bean.getResult().getRecsong().getResult().get(i).getAuthor());
                 }
@@ -258,22 +260,22 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
             case 11:
                 ThreeImgViewHolder originalViewHolder = (ThreeImgViewHolder) holder;
 
-                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), originalViewHolder.hot_album_pictrul,options);
+                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), originalViewHolder.hot_album_pictrul, options);
                 originalViewHolder.hot_album_title.setText(bean.getModule().get(position).getTitle());
 
                 for (int i = 0; i < 3; i++) {
-                    ImageLoader.getInstance().displayImage(bean.getResult().getMix_9().getResult().get(i).getPic(), originalViewHolder.hot_album_pics[i],options);
+                    ImageLoader.getInstance().displayImage(bean.getResult().getMix_9().getResult().get(i).getPic(), originalViewHolder.hot_album_pics[i], options);
                     originalViewHolder.hot_album_texts[i].setText(bean.getResult().getMix_9().getResult().get(i).getTitle());
                 }
                 break;
             case 12:
                 SixImgViewHolder hotMVViewHolder = (SixImgViewHolder) holder;
 
-                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), hotMVViewHolder.songlist_recommend_pictrul,options);
+                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), hotMVViewHolder.songlist_recommend_pictrul, options);
                 hotMVViewHolder.songlist_recommend_title.setText(bean.getModule().get(pos - 1).getTitle());
 
                 for (int i = 0; i < bean.getResult().getMix_5().getResult().size(); i++) {
-                    ImageLoader.getInstance().displayImage(bean.getResult().getMix_5().getResult().get(i).getPic(), hotMVViewHolder.songlist_recommend_imgs[i],options);
+                    ImageLoader.getInstance().displayImage(bean.getResult().getMix_5().getResult().get(i).getPic(), hotMVViewHolder.songlist_recommend_imgs[i], options);
                     hotMVViewHolder.songlist_recommend_texts[i].setText(bean.getResult().getMix_5().getResult().get(i).getTitle());
                     hotMVViewHolder.songlist_recommend_singers[i].setText(bean.getResult().getMix_5().getResult().get(i).getAuthor());
                 }
@@ -282,22 +284,22 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
                 break;
             case 13:
                 SixImgViewHolder leboRadioViewHolder = (SixImgViewHolder) holder;
-                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), leboRadioViewHolder.songlist_recommend_pictrul,options);
+                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), leboRadioViewHolder.songlist_recommend_pictrul, options);
                 leboRadioViewHolder.songlist_recommend_title.setText(bean.getModule().get(pos - 1).getTitle());
 
                 for (int i = 0; i < bean.getResult().getRadio().getResult().size(); i++) {
-                    ImageLoader.getInstance().displayImage(bean.getResult().getRadio().getResult().get(i).getPic(), leboRadioViewHolder.songlist_recommend_imgs[i],options);
+                    ImageLoader.getInstance().displayImage(bean.getResult().getRadio().getResult().get(i).getPic(), leboRadioViewHolder.songlist_recommend_imgs[i], options);
                     leboRadioViewHolder.songlist_recommend_texts[i].setText(bean.getResult().getRadio().getResult().get(i).getTitle());
                 }
 
                 break;
             case 14:
                 ColumnViewHolder columnViewHolder = (ColumnViewHolder) holder;
-                ImageLoader.getInstance().displayImage(bean.getModule().get(pos-1).getPicurl(),columnViewHolder.column_pictrul,options);
-                columnViewHolder.column_title.setText(bean.getModule().get(pos-1).getTitle());
+                ImageLoader.getInstance().displayImage(bean.getModule().get(pos - 1).getPicurl(), columnViewHolder.column_pictrul, options);
+                columnViewHolder.column_title.setText(bean.getModule().get(pos - 1).getTitle());
                 for (int i = 0; i < 4; i++) {
                     ImageLoader.getInstance().displayImage(bean.getResult().getMod_7().getResult().get(i).getPic()
-                            ,columnViewHolder.column_pics[i],options);
+                            , columnViewHolder.column_pics[i], options);
                     columnViewHolder.column_texts[i].setText(bean.getResult().getMod_7().getResult().get(i).getTitle());
                     columnViewHolder.column_descs[i].setText(bean.getResult().getMod_7().getResult().get(i).getDesc());
                 }
@@ -312,10 +314,10 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        SixImgViewHolder six=new SixImgViewHolder(v);
+        SixImgViewHolder six = new SixImgViewHolder(v);
 
-        switch (v.getId()){
-            case  R.id.img_entry_singer:
+        switch (v.getId()) {
+            case R.id.img_entry_singer:
                 onListenerCallBack.CallBack(RecItemControlValues.ENTRY_SINGER_NUM);
                 break;
             case R.id.img_entry_classify:
@@ -329,7 +331,6 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
                 break;
 
 
-
         }
     }
 
@@ -338,7 +339,6 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
     public int getItemCount() {
         return bean == null ? 0 : bean.getModule().size();
     }
-
 
 
     /*****************/
@@ -485,19 +485,20 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
         private ImageButton scene_radio_btn3;
         ImageButton scene_radio_btns[] = {scene_radio_btn1, scene_radio_btn2, scene_radio_btn3, scene_radio_btn4};
 
-        int scene_radio_text_id[]={R.id.scene_radio_btn_text1,R.id.scene_radio_btn_text2,R.id.scene_radio_btn_text3,R.id.scene_radio_btn_text4};
+        int scene_radio_text_id[] = {R.id.scene_radio_btn_text1, R.id.scene_radio_btn_text2, R.id.scene_radio_btn_text3, R.id.scene_radio_btn_text4};
         private TextView scene_radio_btn_text1;
         private TextView scene_radio_btn_text2;
         private TextView scene_radio_btn_text3;
         private TextView scene_radio_btn_text4;
-        TextView scene_radio_texts[]={scene_radio_btn_text1,scene_radio_btn_text2,scene_radio_btn_text3,scene_radio_btn_text4};
+        TextView scene_radio_texts[] = {scene_radio_btn_text1, scene_radio_btn_text2, scene_radio_btn_text3, scene_radio_btn_text4};
+
         public SceneViewHolder(View itemView) {
             super(itemView);
             scene_radio_icon = (ImageView) itemView.findViewById(R.id.scene_radio_icon);
             scene_radio_title = (TextView) itemView.findViewById(R.id.scene_radio_title);
             for (int i = 0; i < 4; i++) {
                 scene_radio_btns[i] = (ImageButton) itemView.findViewById(scene_radio_btn_id[i]);
-                scene_radio_texts[i]=(TextView)itemView.findViewById(scene_radio_text_id[i]);
+                scene_radio_texts[i] = (TextView) itemView.findViewById(scene_radio_text_id[i]);
             }
         }
     }
@@ -584,7 +585,7 @@ public class RecommendAdapter extends RecyclerView.Adapter implements View.OnCli
             for (int i = 0; i < 4; i++) {
                 column_pics[i] = (ImageView) itemView.findViewById(column_pic_id[i]);
                 column_texts[i] = (TextView) itemView.findViewById(column_text_id[i]);
-                column_descs[i]= (TextView) itemView.findViewById(column_desc_id[i]);
+                column_descs[i] = (TextView) itemView.findViewById(column_desc_id[i]);
             }
 
         }

@@ -12,17 +12,18 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import zxh.bdmusic.R;
+import zxh.bdmusic.bean.SongListBean;
 import zxh.bdmusic.musiclibrary.recommend.recbaseinfo.OnListenerCallBack;
 import zxh.bdmusic.musiclibrary.recommend.songlistclickin.SongClickInMsgCallback;
 
 /**
  * Created by dllo on 16/9/22.
  */
-public class SongListRvAdapter extends RecyclerView.Adapter<SongListRvAdapter.MyViewHolder>{
+public class SongListRvAdapter extends RecyclerView.Adapter<SongListRvAdapter.MyViewHolder> {
 
     private DisplayImageOptions options;
 
-    SongClickInMsgCallback songClickInMsgCallback;
+    private SongClickInMsgCallback songClickInMsgCallback;
 
     public void setSongClickInMsgCallback(SongClickInMsgCallback songClickInMsgCallback) {
         this.songClickInMsgCallback = songClickInMsgCallback;
@@ -32,11 +33,11 @@ public class SongListRvAdapter extends RecyclerView.Adapter<SongListRvAdapter.My
         this.onListenerCallBack = onListenerCallBack;
     }
 
-    OnListenerCallBack onListenerCallBack;
+    private OnListenerCallBack onListenerCallBack;
 
 
-    Context context;
-    SongListBean bean = new SongListBean();
+    private Context context;
+    private SongListBean bean = new SongListBean();
 
     public void setBean(SongListBean bean) {
         this.bean = bean;

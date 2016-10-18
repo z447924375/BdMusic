@@ -13,21 +13,22 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import zxh.bdmusic.R;
+import zxh.bdmusic.bean.SingerListBean;
 
 /**
  * Created by dllo on 16/9/27.
  */
 public class SingerListAdapter extends BaseAdapter {
-    DisplayImageOptions options;
+   private DisplayImageOptions options;
 
-    Context context;
+    private Context context;
 
     public void setBean(SingerListBean bean) {
         this.bean = bean;
         notifyDataSetChanged();
     }
 
-    SingerListBean bean = new SingerListBean();
+   private SingerListBean bean = new SingerListBean();
 
     public SingerListAdapter(Context context) {
 

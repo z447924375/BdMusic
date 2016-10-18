@@ -36,7 +36,8 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.eventbus.SendChartClickInBeanEvent;
+import zxh.bdmusic.bean.ChartClickInBean;
+import zxh.bdmusic.tools.eventbus.SendChartClickInBeanEvent;
 import zxh.bdmusic.playservice.MusicPlayService;
 
 /**

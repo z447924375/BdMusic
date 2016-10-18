@@ -20,10 +20,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import zxh.bdmusic.baseclass.MyApp;
-import zxh.bdmusic.baseclass.VolleySingleton;
-import zxh.bdmusic.eventbus.SendListArrFromServicEvent;
-import zxh.bdmusic.eventbus.SendSongMsgBeanEvent;
-import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
+import zxh.bdmusic.tools.VolleySingleton;
+import zxh.bdmusic.bean.SongMsgBean;
+import zxh.bdmusic.tools.eventbus.SendListArrFromServicEvent;
+import zxh.bdmusic.tools.eventbus.SendSongMsgBeanEvent;
+import zxh.bdmusic.usedvalues.URLVlaues;
 
 /**
  * Created by dllo on 16/10/7.

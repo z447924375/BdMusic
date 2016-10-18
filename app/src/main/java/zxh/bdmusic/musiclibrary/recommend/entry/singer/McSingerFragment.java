@@ -19,8 +19,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.baseclass.VolleySingleton;
-import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
+import zxh.bdmusic.tools.VolleySingleton;
+import zxh.bdmusic.bean.HotSingerImgBean;
+import zxh.bdmusic.usedvalues.URLVlaues;
 
 /**
  * Created by dllo on 16/9/26.
@@ -43,7 +44,7 @@ public class McSingerFragment extends BaseFragment implements View.OnClickListen
     private RelativeLayout other_singer;
     private FragmentManager fm;
     private LinearLayout mc_singer_scrollview;
-    HotSingerImgBean bean=new HotSingerImgBean();
+   private HotSingerImgBean bean=new HotSingerImgBean();
     private DisplayImageOptions options;
 
 
@@ -191,5 +192,8 @@ public class McSingerFragment extends BaseFragment implements View.OnClickListen
         VolleySingleton.getInstance().addRequest(stringRequest);
 
     }
+
+
+
 
 }

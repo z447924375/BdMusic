@@ -12,8 +12,9 @@ import com.google.gson.Gson;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.baseclass.VolleySingleton;
-import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
+import zxh.bdmusic.tools.VolleySingleton;
+import zxh.bdmusic.bean.MvBean;
+import zxh.bdmusic.usedvalues.URLVlaues;
 
 /**
  * Created by dllo on 16/9/20.
@@ -21,7 +22,7 @@ import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
 public class MvFragment extends BaseFragment {
 
     private RecyclerView mc_mv_rv;
-    MvBean bean=new MvBean();
+   private MvBean bean=new MvBean();
     private Button btn_mv_new;
     private Button btn_mv_hot;
 

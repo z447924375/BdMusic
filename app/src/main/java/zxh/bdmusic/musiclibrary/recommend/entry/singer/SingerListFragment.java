@@ -16,7 +16,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.baseclass.VolleySingleton;
+import zxh.bdmusic.tools.VolleySingleton;
+import zxh.bdmusic.bean.SingerListBean;
 
 /**
  * Created by dllo on 16/9/27.

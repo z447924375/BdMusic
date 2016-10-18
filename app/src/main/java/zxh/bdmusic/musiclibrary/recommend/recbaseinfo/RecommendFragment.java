@@ -16,9 +16,10 @@ import java.util.ArrayList;
 
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
-import zxh.bdmusic.baseclass.VolleySingleton;
-import zxh.bdmusic.eventbus.SendVpChangePosEvent;
-import zxh.bdmusic.musiclibrary.musicllibbaseinfo.URLVlaues;
+import zxh.bdmusic.tools.VolleySingleton;
+import zxh.bdmusic.bean.RecommendBean;
+import zxh.bdmusic.tools.eventbus.SendVpChangePosEvent;
+import zxh.bdmusic.usedvalues.URLVlaues;
 import zxh.bdmusic.musiclibrary.recommend.entry.singer.McSingerFragment;
 import zxh.bdmusic.musiclibrary.recommend.newcd.NewCdFragment;
 import zxh.bdmusic.musiclibrary.recommend.songlistclickin.SongListClickInFragment;
@@ -28,7 +29,7 @@ import zxh.bdmusic.musiclibrary.songlist.SongListRvAdapter;
  * Created by dllo on 16/9/20.
  */
 public class RecommendFragment extends BaseFragment {
-    ArrayList<RecommendBean> arrayList = new ArrayList<>();
+   private ArrayList<RecommendBean> arrayList = new ArrayList<>();
     private RecommendFragment recommendFragment;
     private RecommendBean bean;
     private RecyclerView rv;

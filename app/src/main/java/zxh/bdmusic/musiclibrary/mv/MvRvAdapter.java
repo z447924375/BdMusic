@@ -12,13 +12,14 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import zxh.bdmusic.R;
+import zxh.bdmusic.bean.MvBean;
 
 /**
  * Created by dllo on 16/9/28.
  */
 public class MvRvAdapter extends RecyclerView.Adapter<MvRvAdapter.MyViewHolder> {
 
-    MvBean bean = new MvBean();
+   private MvBean bean = new MvBean();
 
     public void setBean(MvBean bean) {
         this.bean = bean;

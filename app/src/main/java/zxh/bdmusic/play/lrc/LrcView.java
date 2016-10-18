@@ -87,11 +87,11 @@ public class LrcView extends View implements ILrcView {
     /**
      * 歌词字体大小最小值
      **/
-    private int mMinLrcFontSize = 25;
+    private int mMinLrcFontSize = 30;
     /**
      * 歌词字体大小最大值
      **/
-    private int mMaxLrcFontSize = 40;
+    private int mMaxLrcFontSize = 50;
 
     /**
      * 两行歌词之间的间距
@@ -447,7 +447,6 @@ public class LrcView extends View implements ILrcView {
         if (mDisplayMode != DISPLAY_MODE_NORMAL) {
             return;
         }
-        Log.d(TAG, "seekLrcToTime:" + time);
 
         for (int i = 0; i < mLrcRows.size(); i++) {
             LrcRow current = mLrcRows.get(i);

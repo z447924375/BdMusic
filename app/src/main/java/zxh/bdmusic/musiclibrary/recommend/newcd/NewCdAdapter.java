@@ -8,19 +8,20 @@ import android.view.ViewGroup;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import zxh.bdmusic.R;
+import zxh.bdmusic.bean.NewCdBean;
 
 /**
  * Created by dllo on 16/10/5.
  */
 public class NewCdAdapter extends RecyclerView.Adapter<NewCdAdapter.MyViewHolder> {
-    Context context;
+    private Context context;
     private DisplayImageOptions options;
 
     public void setBean(NewCdBean bean) {
         this.bean = bean;
     }
 
-    NewCdBean bean=new NewCdBean();
+    private NewCdBean bean=new NewCdBean();
 
     public NewCdAdapter(Context context) {
         this.context = context;

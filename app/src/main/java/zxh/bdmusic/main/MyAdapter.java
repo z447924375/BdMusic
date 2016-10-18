@@ -9,10 +9,10 @@ import java.util.ArrayList;
 /**
  * Created by dllo on 16/9/20.
  */
-public class MyAdapter extends FragmentPagerAdapter{
+public class MyAdapter extends FragmentPagerAdapter {
 
-    ArrayList<Fragment>fragments=new ArrayList<>();
-    ArrayList<String>titles=new ArrayList<>();
+    ArrayList<Fragment> fragments = new ArrayList<>();
+    ArrayList<String> titles = new ArrayList<>();
 
     public MyAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
         super(fm);
@@ -22,6 +22,7 @@ public class MyAdapter extends FragmentPagerAdapter{
         titles.add("动态");
         titles.add("直播");
     }
+
     public MyAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -33,7 +34,7 @@ public class MyAdapter extends FragmentPagerAdapter{
 
     @Override
     public int getCount() {
-        return fragments==null?0:fragments.size();
+        return fragments == null ? 0 : fragments.size();
     }
 
     @Override

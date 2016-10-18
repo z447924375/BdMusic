@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by dllo on 16/10/12.
  */
 public class PlayVpAdapter extends FragmentPagerAdapter {
-    ArrayList<Fragment> fragments = new ArrayList<>();
+    private ArrayList<Fragment> fragments = new ArrayList<>();
 
     public PlayVpAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
         super(fm);
