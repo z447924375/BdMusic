@@ -20,9 +20,9 @@ import zxh.bdmusic.musiclibrary.recommend.recbaseinfo.OnListenerCallBack;
  * Created by dllo on 16/9/29.
  */
 public class SongListClickInAdapter extends RecyclerView.Adapter<SongListClickInAdapter.MyViewHolder> {
-    DisplayImageOptions options;
-    OnListenerCallBack onListenerCallBack;
-    SongClickInBtnMoreMsgCallback songClickInBtnMoreMsgCallback;
+    private DisplayImageOptions options;
+    private OnListenerCallBack onListenerCallBack;
+    private SongClickInBtnMoreMsgCallback songClickInBtnMoreMsgCallback;
 
     public void setSongClickInBtnMoreMsgCallback(SongClickInBtnMoreMsgCallback songClickInBtnMoreMsgCallback) {
         this.songClickInBtnMoreMsgCallback = songClickInBtnMoreMsgCallback;
@@ -42,14 +42,8 @@ public class SongListClickInAdapter extends RecyclerView.Adapter<SongListClickIn
 
     public SongListClickInAdapter(Context context) {
         this.context = context;
-        options = new DisplayImageOptions
-                .Builder()
-                .showImageForEmptyUri(R.mipmap.default_live_ic)
-                .showImageOnLoading(R.mipmap.default_live_ic)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .build();
+        options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.mipmap.default_live_ic).showImageOnLoading(R.mipmap.default_live_ic)
+                .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
     }
 
     @Override

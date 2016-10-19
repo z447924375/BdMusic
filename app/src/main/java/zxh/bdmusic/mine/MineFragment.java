@@ -8,8 +8,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 
 import zxh.bdmusic.R;
@@ -34,7 +32,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initView() {
-        EventBus.getDefault().register(this);
 
         localSongNum = getViewLayout(R.id.local_song_num);
         btnLocalPlay = getViewLayout(R.id.btn_local_play);
