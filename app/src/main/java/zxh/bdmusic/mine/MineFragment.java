@@ -8,6 +8,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 
 import zxh.bdmusic.R;
@@ -18,7 +20,6 @@ import zxh.bdmusic.bean.LocalSongBean;
  * Created by dllo on 16/9/20.
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener {
-
     private TextView localSongNum;
     private ImageButton btnLocalPlay;
     private ListView localLv;
@@ -33,6 +34,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
+
         localSongNum = getViewLayout(R.id.local_song_num);
         btnLocalPlay = getViewLayout(R.id.btn_local_play);
         localLv = getViewLayout(R.id.local_lv);
@@ -64,7 +67,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         for (int i = 0; i < mLocalSongArr.size(); i++) {
             mSongIDs.add(mLocalSongArr.get(i).getSongid());
         }
-
         LocalSongAdapter adapter = new LocalSongAdapter(getContext());
         adapter.setArrayList(mLocalSongArr);
         localLv.setAdapter(adapter);

@@ -12,7 +12,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,8 +36,8 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 import zxh.bdmusic.R;
 import zxh.bdmusic.baseclass.BaseFragment;
 import zxh.bdmusic.bean.ChartClickInBean;
-import zxh.bdmusic.tools.eventbus.SendChartClickInBeanEvent;
 import zxh.bdmusic.playservice.MusicPlayService;
+import zxh.bdmusic.tools.eventbus.SendChartClickInBeanEvent;
 
 /**
  * Created by dllo on 16/10/10.
@@ -78,23 +77,8 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
         String chartClickInPicSrc = bundle.getString("chartClickInPicSrc");
         ImgAscyntask ascyntask = new ImgAscyntask();
         ascyntask.execute(chartClickInPicSrc);
-//
-//        Picasso.with(getContext()).load(chartClickInPicSrc).into(new Target() {
-//            @Override
-//            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                chart_clickin_appbar_ll.setBackground(new BitmapDrawable(bitmap));
-//            }
-//
-//            @Override
-//            public void onBitmapFailed(Drawable errorDrawable) {
-//
-//            }
-//
-//            @Override
-//            public void onPrepareLoad(Drawable placeHolderDrawable) {
-//
-//            }
-//        });
+
+
         chart_clickin_btn_back.setOnClickListener(this);
         chart_clickin_btn_share.setOnClickListener(this);
         adapter = new ChartClickInRvAdapter(getContext());
@@ -109,12 +93,8 @@ public class ChartClickInFragment extends BaseFragment implements View.OnClickLi
         bean = event.getChartClickInBean();
         for (int i = 0; i < bean.getSong_list().size(); i++) {
             songIDs.add(bean.getSong_list().get(i).getSong_id());
-
             songNames.add(bean.getSong_list().get(i).getTitle());
             authors.add(bean.getSong_list().get(i).getAuthor());
-            Log.d("ChartClickInFragment", bean.getSong_list().get(i).getTitle()
-                    + bean.getSong_list().get(i).getAuthor());
-            
 
         }
         chart_clickin_rv.setAdapter(adapter);

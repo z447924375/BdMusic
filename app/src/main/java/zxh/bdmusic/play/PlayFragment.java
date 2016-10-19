@@ -32,6 +32,7 @@ import zxh.bdmusic.baseclass.BaseFragment;
 import zxh.bdmusic.baseclass.MyApp;
 import zxh.bdmusic.bean.DownloadSongBean;
 import zxh.bdmusic.bean.SongMsgBean;
+import zxh.bdmusic.tools.eventbus.SendDownloadEvent;
 import zxh.bdmusic.playservice.MusicPlayService;
 import zxh.bdmusic.tools.eventbus.SendPlayConditionEvent;
 import zxh.bdmusic.tools.eventbus.SendPlayLastOrNextEvent;
@@ -204,6 +205,8 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.btn_play_clickin_download:
+
+
                 downloadSong(songMsgBean);
                 break;
 
@@ -343,6 +346,10 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener {
             downloadSongBean.setAuthor(songMsgBean.getSonginfo().getAuthor());
             downloadSongBean.setTitle(songMsgBean.getSonginfo().getTitle());
             downloadSongBean.setSongId(songMsgBean.getSonginfo().getSong_id());
+
+            SendDownloadEvent downloadEvent = new SendDownloadEvent();
+            downloadEvent.setDownload(true);
+            EventBus.getDefault().post(downloadEvent);
 //            DBtool.getmDBtools().insertDownloadSong(downloadSongBean);
         }
     }

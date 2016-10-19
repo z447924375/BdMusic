@@ -160,8 +160,7 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
                 Log.d("kkkk", "song == null ******");
             }
         }
-        SharedPreferences sharedPreferences = getSharedPreferences("con", MODE_PRIVATE);
-        con = sharedPreferences.getInt("condition", 0);
+
 
         btn_play_pause.setOnClickListener(this);
         btn_play_next.setOnClickListener(this);
@@ -214,7 +213,8 @@ public class MainActivity extends BaseActy implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
+        SharedPreferences sharedPreferences = getSharedPreferences("con", MODE_PRIVATE);
+        con = sharedPreferences.getInt("condition", 0);
         switch (v.getId()) {
             case R.id.btn_play_song_pause:
 
