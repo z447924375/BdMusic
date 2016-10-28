@@ -75,20 +75,21 @@
                     android:layout_marginRight="10dp"
                     android:background="@mipmap/ic_download_normal" />
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/chart_clickin_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:layout_alignEnd="@+id/chart_clickin_btn_download">
+
+                </android.support.v7.widget.RecyclerView>
+
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/chart_clickin_rv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    </android.support.v7.widget.RecyclerView>
 
     <RelativeLayout
         android:layout_width="match_parent"
